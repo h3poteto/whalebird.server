@@ -13,20 +13,20 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  username: <%= ENV["DB_USERNAME"] || "root" %>
+  password: <%= ENV["DB_PASSWORD"] %>
+  socket: <%= ENV["DB_SOCKET"] %>
 
 development:
   <<: *default
-  database: whalebird_server_development
+  database: <%= ENV["DB_WHALEBIRD_DEVELOPMENT"] | "whalebird_development" %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: whalebird_server_test
+  database: <%= ENV["DB_WHALEBIRD_TEST"] | "whalebird_test" %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: whalebird_server_production
-  username: whalebird_server
-  password: <%= ENV['WHALEBIRD_SERVER_DATABASE_PASSWORD'] %>
+  database: <%= ENV["DB_WHALEBIRD_PRODUCTION"] | "whalebird_production" %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
