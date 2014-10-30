@@ -1,0 +1,2 @@
+module Users::StaticsHelper
+end
