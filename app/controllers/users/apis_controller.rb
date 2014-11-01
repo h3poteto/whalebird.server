@@ -2,12 +2,12 @@ class Users::ApisController < UsersController
   before_action :set_user
   before_action :set_twitter
   before_action :set_api_parameter
-  skip_before_filter :verify_authenticity_token, only: [:tweet], if: Proc.new{|app|
+  skip_before_action :verify_authenticity_token, only: [:tweet], if: Proc.new{|app|
     request.format == :json
   }
+  before_action :only_json
 
-  # GET /users/apis
-  # GET /users/apis.json
+  ## GET APIs
   def index
   end
 
@@ -47,6 +47,7 @@ class Users::ApisController < UsersController
     @response = @client.followers(@settings)
   end
 
+  ## POST APIs
   def tweet
     @response = @client.update(params[:status], @settings)
     render action: :index
@@ -85,5 +86,9 @@ class Users::ApisController < UsersController
 
     def set_api_parameter
       @settings = params[:settings]
+    end
+
+    def only_json
+      redirect_to root_path unless request.format == :json
     end
 end

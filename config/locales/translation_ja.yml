@@ -1,0 +1,22 @@
+ja:
+  activerecord:
+    models:
+      user: user  #g
+
+    attributes:
+      user:
+        current_sign_in_at: current_sign_in_at  #g
+        current_sign_in_ip: current_sign_in_ip  #g
+        email: email  #g
+        encrypted_password: encrypted_password  #g
+        last_sign_in_at: last_sign_in_at  #g
+        last_sign_in_ip: last_sign_in_ip  #g
+        name: name  #g
+        oauth_token: oauth_token  #g
+        oauth_token_secret: oauth_token_secret  #g
+        provider: provider  #g
+        remember_created_at: remember_created_at  #g
+        reset_password_sent_at: reset_password_sent_at  #g
+        reset_password_token: reset_password_token  #g
+        screen_name: screen_name  #g
+        uid: uid  #g

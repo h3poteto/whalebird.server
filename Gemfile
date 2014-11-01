@@ -46,6 +46,7 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'jpmobile'
 gem 'twitter'
+gem 'i18n_generators'
 
 
 group :development, :test do
