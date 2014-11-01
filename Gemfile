@@ -14,6 +14,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -41,6 +44,8 @@ gem 'simple_form'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-twitter'
+gem 'jpmobile'
+gem 'twitter'
 
 
 group :development, :test do
