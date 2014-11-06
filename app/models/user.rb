@@ -1,10 +1,14 @@
 # coding: utf-8
+require 'houston'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  has_one :user_setting
+
+  APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
 
   def self.create_unique_string
     SecureRandom.uuid
@@ -31,4 +35,31 @@ class User < ActiveRecord::Base
   def self.create_unique_email
     User.create_unique_string + "@example.com"
   end
+
+  def send_notification(message, category, status=nil)
+    ## TODO: send remote notification
+    if user_setting.device_token.present?
+      APN.certificate = File.read(Settings.push.certification_path)
+      notification = Houston::Notification.new(device: user_setting.device_token)
+      notification.alert = message
+      notification.badge = 1
+      notification.sound = "sosumi.aiff"
+      notification.category = category
+      notification.content_available = true
+
+      if status.present?
+        notification.custom_data = {
+          id: status.id.to_s,
+          text: status.text,
+          screen_name: status.user.screen_name,
+          name: status.user.name,
+          profile_image_url: status.user.profile_image_url.to_s,
+          created_at: status.created_at.in_time_zone.strftime("%m月%d日%H:%M")
+        }
+      end
+
+      APN.push(notification)
+    end
+  end
+
 end

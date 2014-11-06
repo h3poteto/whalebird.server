@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         post :retweet
         post :favorite
         post :delete
+        post :update_settings
       end
     end
   end

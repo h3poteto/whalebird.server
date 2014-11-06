@@ -68,6 +68,17 @@ class Users::ApisController < UsersController
     render action: :index
   end
 
+  def update_settings
+    if @user.user_setting.present?
+      @user.user_setting.update_attributes(permitted_params)
+    else
+      setting = UserSetting.new(permitted_params)
+      @user.user_setting = setting
+      @user.save!
+    end
+    render action: :index
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -90,5 +101,9 @@ class Users::ApisController < UsersController
 
     def only_json
       redirect_to root_path unless request.format == :json
+    end
+
+    def permitted_params
+      params.require(:settings).permit(:notification, :reply, :favorite, :retweet, :direct_message, :device_token)
     end
 end

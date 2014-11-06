@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141030091954) do
+ActiveRecord::Schema.define(version: 20141102090300) do
+
+  create_table "user_settings", force: true do |t|
+    t.integer  "user_id"
+    t.boolean  "notification",   default: true,  null: false
+    t.boolean  "reply",          default: true,  null: false
+    t.boolean  "favorite",                       null: false
+    t.boolean  "direct_message", default: false, null: false
+    t.boolean  "retweet",        default: false, null: false
+    t.string   "device_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

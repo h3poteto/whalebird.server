@@ -46,8 +46,10 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'jpmobile'
 gem 'twitter'
+gem 'tweetstream'
 gem 'i18n_generators'
-
+gem 'sidekiq'
+gem 'houston'
 
 group :development, :test do
   gem 'debugger2', :git => 'git://github.com/ko1/debugger2.git'
