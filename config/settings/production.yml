@@ -1,6 +1,6 @@
 site:
-  host: "whalebird.org"
-  fqdn: "whalebird.org"
+  host: "api.whalebird.org"
+  fqdn: "api.whalebird.org"
 redis: "127.0.0.1:6379"
 push:
-  certification_path: "public/server_certificates_production.pem"
+  certification_path: "certification/server_certificates_production.pem"

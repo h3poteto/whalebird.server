@@ -2,4 +2,4 @@ site:
   fqdn: "192.168.33.14:3000"
   host: "192.168.33.14"
 push:
-  certification_path: "public/server_certificates_sandbox.pem"
+  certification_path: "certification/server_certificates_sandbox.pem"
