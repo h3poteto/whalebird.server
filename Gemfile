@@ -50,6 +50,8 @@ gem 'tweetstream'
 gem 'i18n_generators'
 gem 'sidekiq'
 gem 'houston'
+gem 'exception_notification'
+
 
 group :development, :test do
   gem 'debugger2', :git => 'git://github.com/ko1/debugger2.git'
