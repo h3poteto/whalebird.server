@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Admin.where(email: ENV["SERVER_EMAIL"]).first_or_create(
+  email: ENV["SERVER_EMAIL"],
+  password: ENV["SERVER_EMAIL_PASSWORD"],
+  password_confirmation: ENV["SERVER_EMAIL_PASSWORD"]
+)

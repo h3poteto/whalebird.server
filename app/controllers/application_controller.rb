@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
     case resource
     when User
       users_apis_path
+    when Admin
+      sidekiq_web_path
     end
   end
 
