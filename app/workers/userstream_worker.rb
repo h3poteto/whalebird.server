@@ -15,37 +15,49 @@ class UserstreamWorker
 
     client = TweetStream::Client.new
 
+    client.on_direct_message do |direct_message|
+      return unless @user.user_setting.notification?
+
+      if @user.user_setting.direct_message?
+        message = "DM @" + direct_message.sender.screen_name + ": " + direct_message.text
+        p "sent direct message push: #{@user.screen_name}"
+        @user.send_notification(message, "direct_message", nil)
+      end
+
+    end
+
     ## for fav event
     client.on_event(:favorite) do |event|
       ## notificationによりタスク終了
-      break unless @user.user_setting.notification?
+      return unless @user.user_setting.notification?
 
-      if event[:event] == "favorite" && @user.user_setting.notification? && @user.user_setting.favorite?
-        screen_name = event[:srouce][:screen_name]
-        message = "@" + screen_name + "さんがお気に入りに追加しました"
-        ## TODO: ここでpush通知
+      if event[:event] == "favorite" && @user.user_setting.favorite?
+        p event[:source][:screen_name]
+        message = "@" + event[:source][:screen_name] + "さんがお気に入りに追加しました"
+        p "sent favorite push: #{@user.screen_name}"
         @user.send_notification(message, "favorite", nil)
-        #send_notification(message, @user)
       end
     end
 
     ## read timeline
     client.userstream do |status|
       ## notificationによりタスク終了
-      break unless @user.user_setting.notification?
+      return unless @user.user_setting.notification?
 
       if (status.text.index("RT") == 0 || status.text.index("QT") == 0) && status.user.screen_name != @user.screen_name && status.text.include?("@" + @user.screen_name)
-        screen_name = status.user.screen_name
-        message = "@" + screen_name + "さんがRTしました"
-        ## TODO: push
-        p "sent retweet push"
-        @user.send_notification(message, "retweet", nil) if @user.user_setting.retweet?
+        if @user.user_setting.retweet?
+          screen_name = status.user.screen_name
+          message = "@" + screen_name + "さんがRTしました"
+          p "sent retweet push: #{@user.screen_name}"
+          @user.send_notification(message, "retweet", nil)
+        end
       elsif status.user.screen_name != @user.screen_name && status.text.include?("@" + @user.screen_name)
-        screen_name = status.user.screen_name
-        message = "@" + screen_name + ": " + status.text
-        ## TODO: push
-        p "sent reply push"
-        @user.send_notification(message, "reply", status) if @user.user_setting.reply?
+        if @user.user_setting.reply?
+          screen_name = status.user.screen_name
+          message = "@" + screen_name + ": " + status.text
+          p "sent reply push: #{@user.screen_name}"
+          @user.send_notification(message, "reply", status)
+        end
       end
     end
 
