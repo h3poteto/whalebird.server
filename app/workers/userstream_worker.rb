@@ -21,6 +21,8 @@ class UserstreamWorker
       if @user.user_setting.direct_message?
         message = "DM @" + direct_message.sender.screen_name + ": " + direct_message.text
         p "sent direct message push: #{@user.screen_name}"
+        @user.unread_count.unread += 1
+        @user.unread_count.save!
         @user.send_notification(message, "direct_message", nil)
       end
 
@@ -56,6 +58,8 @@ class UserstreamWorker
           screen_name = status.user.screen_name
           message = "@" + screen_name + ": " + status.text
           p "sent reply push: #{@user.screen_name}"
+          @user.unread_count.unread += 1
+          @user.unread_count.save!
           @user.send_notification(message, "reply", status)
         end
       end

@@ -1,11 +1,12 @@
 class Users::ApisController < UsersController
-  before_action :set_user
-  before_action :set_twitter
-  before_action :set_api_parameter
+  before_action :only_json
   skip_before_action :verify_authenticity_token, only: [:tweet], if: Proc.new{|app|
     request.format == :json
   }
-  before_action :only_json
+  before_action :set_user
+  before_action :set_twitter
+  before_action :set_api_parameter
+  before_action :clear_unread_count, only: [:home_timeline, :list_timeline, :mentions]
 
   ## GET APIs
   def index
@@ -75,6 +76,9 @@ class Users::ApisController < UsersController
       setting = UserSetting.new(permitted_params)
       @user.user_setting = setting
       @user.save!
+      count = UnreadCount.new
+      count.user = @user
+      count.save!
     end
     render action: :index
   end
@@ -105,5 +109,9 @@ class Users::ApisController < UsersController
 
     def permitted_params
       params.require(:settings).permit(:notification, :reply, :favorite, :retweet, :direct_message, :device_token)
+    end
+
+    def clear_unread_count
+      @user.unread_count.update_attributes(unread: 0)
     end
 end

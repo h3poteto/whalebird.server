@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   has_one :user_setting
+  has_one :unread_count
 
   APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
 
@@ -42,7 +43,7 @@ class User < ActiveRecord::Base
       APN.certificate = File.read(Settings.push.certification_path)
       notification = Houston::Notification.new(device: user_setting.device_token)
       notification.alert = message
-      notification.badge = 1
+      notification.badge = unread_count.unread
       notification.sound = "sosumi.aiff"
       notification.category = category
       notification.content_available = true
