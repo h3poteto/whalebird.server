@@ -4,18 +4,19 @@ class UserstreamWorker
 #  sidekiq_options queue: :loop
 
   def perform(user_id)
-    @user = User.find(user_id)
+    user = User.find(user_id)
     TweetStream.configure do |config|
       config.consumer_key = ENV["TWITTER_CLIENT_ID"]
       config.consumer_secret = ENV["TWITTER_CLIENT_SECRET"]
-      config.oauth_token = @user.oauth_token
-      config.oauth_token_secret = @user.oauth_token_secret
+      config.oauth_token = user.oauth_token
+      config.oauth_token_secret = user.oauth_token_secret
       config.auth_method = :oauth
     end
 
     client = TweetStream::Client.new
 
     client.on_direct_message do |direct_message|
+      @user = User.find(user_id)
       return unless @user.user_setting.notification?
 
       if @user.user_setting.direct_message?
@@ -31,6 +32,7 @@ class UserstreamWorker
     ## for fav event
     client.on_event(:favorite) do |event|
       ## notificationによりタスク終了
+      @user = User.find(user_id)
       return unless @user.user_setting.notification?
 
       if event[:event] == "favorite" && @user.user_setting.favorite?
@@ -44,6 +46,7 @@ class UserstreamWorker
     ## read timeline
     client.userstream do |status|
       ## notificationによりタスク終了
+      @user = User.find(user_id)
       return unless @user.user_setting.notification?
 
       if (status.text.index("RT") == 0 || status.text.index("QT") == 0) && status.user.screen_name != @user.screen_name && status.text.include?("@" + @user.screen_name)
