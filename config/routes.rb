@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get :user_timeline
         get :friends
         get :followers
+        get :direct_messages
         post :tweet
         post :retweet
         post :favorite

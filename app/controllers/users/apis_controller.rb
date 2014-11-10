@@ -6,7 +6,7 @@ class Users::ApisController < UsersController
   before_action :set_user
   before_action :set_twitter
   before_action :set_api_parameter
-  before_action :clear_unread_count, only: [:home_timeline, :list_timeline, :mentions]
+  before_action :clear_unread_count, only: [:home_timeline, :list_timeline, :mentions, :direct_messages]
 
   ## GET APIs
   def index
@@ -26,6 +26,10 @@ class Users::ApisController < UsersController
 
   def mentions
     @response = @client.mentions(@settings)
+  end
+
+  def direct_messages
+    @response = @client.direct_messages(@settings)
   end
 
   def profile_banner
