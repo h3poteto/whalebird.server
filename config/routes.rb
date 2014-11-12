@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         post :favorite
         post :delete
         post :update_settings
+        post :direct_message_create
       end
     end
   end

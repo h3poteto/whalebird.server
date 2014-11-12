@@ -1,6 +1,6 @@
 class Users::ApisController < UsersController
   before_action :only_json
-  skip_before_action :verify_authenticity_token, only: [:tweet], if: Proc.new{|app|
+  skip_before_action :verify_authenticity_token, only: [:tweet, :direct_message_create], if: Proc.new{|app|
     request.format == :json
   }
   before_action :set_user
@@ -84,6 +84,11 @@ class Users::ApisController < UsersController
       count.user = @user
       count.save!
     end
+    render action: :index
+  end
+
+  def direct_message_create
+    @response = @client.direct_message_create(@settings[:screen_name], @settings[:text])
     render action: :index
   end
 
