@@ -24,7 +24,7 @@ class UserstreamWorker
         p "sent direct message push: #{@user.screen_name}"
         @user.unread_count.unread += 1
         @user.unread_count.save!
-        @user.send_notification(message, "direct_message", nil)
+        @user.send_notification(message, "direct_message", direct_message)
       end
 
     end

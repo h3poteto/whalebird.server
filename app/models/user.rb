@@ -49,14 +49,26 @@ class User < ActiveRecord::Base
       notification.content_available = true
 
       if status.present?
-        notification.custom_data = {
-          id: status.id.to_s,
-          text: status.text,
-          screen_name: status.user.screen_name,
-          name: status.user.name,
-          profile_image_url: status.user.profile_image_url.to_s,
-          created_at: status.created_at.in_time_zone.strftime("%m月%d日%H:%M")
-        }
+        case category
+        when "direct_message"
+          notification.custom_data = {
+            id: status.id.to_s,
+            text: status.text,
+            screen_name: status.sender.screen_name,
+            name: status.sender.name,
+            profile_image_url: status.sender.profile_image_url.to_s,
+            created_at: status.created_at.in_time_zone.strftime("%m月%d日%H:%M")
+          }
+        when "reply"
+          notification.custom_data = {
+            id: status.id.to_s,
+            text: status.text,
+            screen_name: status.user.screen_name,
+            name: status.user.name,
+            profile_image_url: status.user.profile_image_url.to_s,
+            created_at: status.created_at.in_time_zone.strftime("%m月%d日%H:%M")
+          }
+        end
       end
 
       APN.push(notification)
