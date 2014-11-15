@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
             screen_name: status.sender.screen_name,
             name: status.sender.name,
             profile_image_url: status.sender.profile_image_url.to_s,
-            created_at: status.created_at.in_time_zone.strftime("%m月%d日%H:%M")
+            created_at: status.created_at.strftime("%Y-%m-%d %H:%M")
           }
         when "reply"
           notification.custom_data = {
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
             screen_name: status.user.screen_name,
             name: status.user.name,
             profile_image_url: status.user.profile_image_url.to_s,
-            created_at: status.created_at.in_time_zone.strftime("%m月%d日%H:%M")
+            created_at: status.created_at.strftime("%Y-%m-%d %H:%M")
           }
         end
       end

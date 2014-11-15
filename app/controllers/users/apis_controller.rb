@@ -33,7 +33,7 @@ class Users::ApisController < UsersController
   end
 
   def profile_banner
-    @response = @client.profile_banner(@settings)
+    @response = @client.profile_banner(@settings) rescue nil
   end
 
   def user
