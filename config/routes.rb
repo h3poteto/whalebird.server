@@ -28,6 +28,7 @@ Rails.application.routes.draw do
         post :tweet
         post :retweet
         post :favorite
+        post :unfavorite
         post :delete
         post :update_settings
         post :direct_message_create

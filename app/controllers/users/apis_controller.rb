@@ -68,6 +68,11 @@ class Users::ApisController < UsersController
     render action: :index
   end
 
+  def unfavorite
+    @response = @client.unfavorite(@settings[:id])
+    render action: :index
+  end
+
   def delete
     @response = @client.status_destroy(@settings[:id])
     render action: :index
