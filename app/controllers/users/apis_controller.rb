@@ -60,7 +60,11 @@ class Users::ApisController < UsersController
 
   ## POST APIs
   def tweet
-    @response = @client.update(params[:status], @settings)
+    if @settings.present?
+      @response = @client.update(params[:status].to_s, @settings)
+    else
+      @response = @client.update(params[:status])
+    end
     render action: :index
   end
 
@@ -120,7 +124,7 @@ class Users::ApisController < UsersController
     end
 
     def set_api_parameter
-      @settings = params[:settings]
+      @settings = params[:settings] if params[:settings].present?
     end
 
     def only_json
