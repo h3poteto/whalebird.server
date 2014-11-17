@@ -25,6 +25,7 @@ Rails.application.routes.draw do
         get :friends
         get :followers
         get :direct_messages
+        get :conversations
         post :tweet
         post :retweet
         post :favorite

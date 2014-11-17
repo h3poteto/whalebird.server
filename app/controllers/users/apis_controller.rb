@@ -1,3 +1,4 @@
+# coding: utf-8
 class Users::ApisController < UsersController
   before_action :only_json
   skip_before_action :verify_authenticity_token, only: [:tweet, :direct_message_create], if: Proc.new{|app|
@@ -50,6 +51,11 @@ class Users::ApisController < UsersController
 
   def followers
     @response = @client.followers(@settings)
+  end
+
+  ## 会話を再帰的にさかのぼり
+  def conversations
+    @response = extend_back_conversations(@settings[:id])
   end
 
   ## POST APIs
@@ -127,5 +133,13 @@ class Users::ApisController < UsersController
 
     def clear_unread_count
       @user.unread_count.update_attributes(unread: 0)
+    end
+
+    def extend_back_conversations(id)
+      result = []
+      status = @client.status(id)
+      result.push(status)
+      result.concat(extend_back_conversations(status.in_reply_to_status_id)) if status.in_reply_to_status_id.present?
+      return result
     end
 end
