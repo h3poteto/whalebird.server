@@ -13,6 +13,7 @@ class Users::ApisController < UsersController
   def index
   end
 
+  ## max_idはある一定以上時間が経つと遡れなくなる．多分home_timelineの上限が決まっている
   def home_timeline
     @response = @client.home_timeline(@settings)
   end
