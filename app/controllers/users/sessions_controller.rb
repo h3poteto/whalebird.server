@@ -4,6 +4,12 @@ class Users::SessionsController < Devise::SessionsController
   }
   before_action :check_application_key, only: [:new]
 
+  def new
+    request.format = :html
+    params = { controller: "users/sessions", action: "new" }
+    super
+  end
+
 
   private
     def check_application_key
