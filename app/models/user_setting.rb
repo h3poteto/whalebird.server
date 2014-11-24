@@ -7,7 +7,7 @@ class UserSetting < ActiveRecord::Base
   validates :user_id, presence: true
 
   def start_userstream
-    UserstreamWorker.perform_async(user_id)
+    UserstreamWorker.perform_in(10.seconds, user_id)
   end
 
   def activate_notification?
