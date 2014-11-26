@@ -1,5 +1,5 @@
 :verbose: false
-:concurrency: 10000
+:concurrency: 100
 :retry: 0
 :queues:
   - [default, 5]
