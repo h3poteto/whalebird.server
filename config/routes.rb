@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         get :direct_messages
         get :conversations
         post :tweet
+        post :upload
         post :retweet
         post :favorite
         post :unfavorite

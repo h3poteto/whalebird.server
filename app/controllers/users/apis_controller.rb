@@ -1,7 +1,7 @@
 # coding: utf-8
 class Users::ApisController < UsersController
   before_action :only_json
-  skip_before_action :verify_authenticity_token, only: [:tweet, :direct_message_create], if: Proc.new{|app|
+  skip_before_action :verify_authenticity_token, only: [:tweet, :direct_message_create, :upload], if: Proc.new{|app|
     request.format == :json
   }
   before_action :set_user
@@ -62,11 +62,22 @@ class Users::ApisController < UsersController
   ## POST APIs
   def tweet
     if @settings.present?
-      @response = @client.update(params[:status].to_s, @settings)
+      if @settings[:media].present?
+        attachment = Attachment.where(filename: @settings[:media].to_s).first
+        file = File.open(attachment.filename.path)
+        @client.update_with_media(params[:status], file)
+      else
+        @response = @client.update(params[:status].to_s, @settings)
+      end
     else
       @response = @client.update(params[:status])
     end
     render action: :index
+  end
+
+  def upload
+    @attachment = Attachment.new(filename: params[:media])
+    @attachment.save!
   end
 
   def retweet
