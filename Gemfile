@@ -54,6 +54,7 @@ gem 'exception_notification'
 gem 'sinatra'
 gem 'carrierwave'
 gem 'rmagick'
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'debugger2', :git => 'git://github.com/ko1/debugger2.git'
