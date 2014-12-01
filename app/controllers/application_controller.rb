@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
   # Prevent CSRF attacks by raising an exception.
@@ -7,6 +8,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     case resource
     when User
+      # TODO: ログインしてたらユーザ情報でも出すか，ログアウトリンクを
       users_apis_path
     when Admin
       sidekiq_web_path

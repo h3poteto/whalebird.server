@@ -1,6 +1,6 @@
 # coding: utf-8
 class Users::ApisController < UsersController
-  before_action :only_json
+  before_action :only_json, except: :index
   skip_before_action :verify_authenticity_token, only: [:tweet, :direct_message_create, :upload], if: Proc.new{|app|
     request.format == :json
   }
