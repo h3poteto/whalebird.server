@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get :user
         get :profile_banner
         get :user_timeline
+        get :user_favorites
         get :friends
         get :followers
         get :direct_messages

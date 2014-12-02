@@ -46,6 +46,10 @@ class Users::ApisController < UsersController
     @response = @client.user_timeline(params[:screen_name], @settings)
   end
 
+  def user_favorites
+    @response = @client.favorites(params[:screen_name], @settings)
+  end
+
   def friends
     @response = @client.friends(@settings)
   end
