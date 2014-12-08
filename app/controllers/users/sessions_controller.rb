@@ -13,6 +13,8 @@ class Users::SessionsController < Devise::SessionsController
 
   private
     def check_application_key
-      redirect_to root_path if params[:whalebird].to_s != ENV["WHALEBIRD_APPLICATION_KEY"]
+      if Rails.env.production?
+        redirect_to root_path if params[:whalebird].to_s != ENV["WHALEBIRD_APPLICATION_KEY"]
+      end
     end
 end
