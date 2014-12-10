@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         get :followers
         get :direct_messages
         get :conversations
+        get :search
         post :tweet
         post :upload
         post :retweet

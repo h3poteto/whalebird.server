@@ -63,6 +63,10 @@ class Users::ApisController < UsersController
     @response = extend_back_conversations(@settings[:id])
   end
 
+  def search
+    @response = @client.search(params[:q])
+  end
+
   ## POST APIs
   def tweet
     if @settings.present?
