@@ -74,5 +74,4 @@ class User < ActiveRecord::Base
       APN.push(notification)
     end
   end
-
 end

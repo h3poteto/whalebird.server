@@ -1,6 +1,7 @@
 # coding: utf-8
 class Users::ApisController < UsersController
   before_action :only_json, except: :index
+  before_action :check_application_key, except: :index
   skip_before_action :verify_authenticity_token, only: [:tweet, :direct_message_create, :upload], if: Proc.new{|app|
     request.format == :json
   }
@@ -165,5 +166,9 @@ class Users::ApisController < UsersController
       result.push(status)
       result.concat(extend_back_conversations(status.in_reply_to_status_id)) if status.in_reply_to_status_id.present?
       return result
+    end
+
+    def check_application_key
+      redirect_to root_path unless ApplicationSecrets.decrypt(request.headers["HTTP_WHALEBIRD_KEY"])
     end
 end
