@@ -30,8 +30,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
-  ## 本番側で異常なのでクライアント側に一任
-  # process :resize_to_limit => [1000, 1000]
+  process :resize_to_limit => [1000, 1000]
 
   # Create different versions of your uploaded files:
   # version :thumb do
