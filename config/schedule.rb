@@ -23,7 +23,7 @@
 # 出力先のログファイルの指定
 set :output, 'log/crontab.log'
 # ジョブの実行環境の指定
-set :environment, :productio
+set :environment, :production
 
 
 every 1.day, :at => '19:00 pm' do
