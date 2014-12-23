@@ -16,7 +16,9 @@ class Users::ApisController < UsersController
 
   ## max_idはある一定以上時間が経つと遡れなくなる．多分home_timelineの上限が決まっている
   def home_timeline
-    @response = @client.home_timeline(@settings)
+    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+    @all_response = @client.home_timeline(@settings)
+    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
   end
 
   def lists
@@ -24,15 +26,21 @@ class Users::ApisController < UsersController
   end
 
   def list_timeline
-    @response = @client.list_timeline(@settings)
+    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+    @all_response = @client.list_timeline(@settings)
+    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
   end
 
   def mentions
-    @response = @client.mentions(@settings)
+    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+    @all_response = @client.mentions(@settings)
+    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
   end
 
   def direct_messages
-    @response = @client.direct_messages(@settings)
+    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+    @all_response = @client.direct_messages(@settings)
+    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
   end
 
   def profile_banner
@@ -44,7 +52,9 @@ class Users::ApisController < UsersController
   end
 
   def user_timeline
-    @response = @client.user_timeline(params[:screen_name], @settings)
+    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+    @all_response = @client.user_timeline(params[:screen_name], @settings)
+    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
   end
 
   def user_favorites
@@ -145,7 +155,7 @@ class Users::ApisController < UsersController
     end
 
     def set_api_parameter
-      @settings = params[:settings] if params[:settings].present?
+      @settings = params[:settings].clone if params[:settings].present?
     end
 
     def only_json
