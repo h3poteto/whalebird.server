@@ -48,13 +48,21 @@ class Users::ApisController < UsersController
   end
 
   def user
-    @response = @client.user(@settings[:screen_name])
+    begin
+      @response = @client.user(@settings[:screen_name])
+    rescue
+      render json: [], status: 500
+    end
   end
 
   def user_timeline
-    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
-    @all_response = @client.user_timeline(params[:screen_name], @settings)
-    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
+    begin
+      @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+      @all_response = @client.user_timeline(params[:screen_name], @settings) rescue nil
+      @response = @all_response[0..(params[:settings][:count].to_i - 1)]
+    rescue
+      render json: [], status: 200
+    end
   end
 
   def user_favorites
