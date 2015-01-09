@@ -38,7 +38,6 @@ class User < ActiveRecord::Base
   end
 
   def send_notification(message, category, status=nil)
-    ## TODO: send remote notification
     if user_setting.device_token.present?
       APN.certificate = File.read(Settings.push.certification_path)
       notification = Houston::Notification.new(device: user_setting.device_token)
@@ -63,6 +62,7 @@ class User < ActiveRecord::Base
           notification.custom_data = {
             id: status.id.to_s,
             text: status.text,
+            favorited: status.favorited?,
             screen_name: status.user.screen_name,
             name: status.user.name,
             profile_image_url: status.user.profile_image_url.to_s,

@@ -1,5 +1,5 @@
 json.array!(@response) do |res|
-  json.extract! res, :text
+  json.extract! res, :text, :favorited?
   json.created_at res.created_at.strftime("%Y-%m-%d %H:%M")
   json.id_str res.id.to_s
   json.user do |json|
