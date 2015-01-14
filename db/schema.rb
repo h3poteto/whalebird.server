@@ -46,11 +46,11 @@ ActiveRecord::Schema.define(version: 20141130032035) do
 
   create_table "user_settings", force: true do |t|
     t.integer  "user_id"
-    t.boolean  "notification",   default: true,  null: false
-    t.boolean  "reply",          default: true,  null: false
-    t.boolean  "favorite",                       null: false
-    t.boolean  "direct_message", default: false, null: false
-    t.boolean  "retweet",        default: false, null: false
+    t.boolean  "notification",   default: true, null: false
+    t.boolean  "reply",          default: true, null: false
+    t.boolean  "favorite",       default: true, null: false
+    t.boolean  "direct_message", default: true, null: false
+    t.boolean  "retweet",        default: true, null: false
     t.string   "device_token"
     t.datetime "created_at"
     t.datetime "updated_at"

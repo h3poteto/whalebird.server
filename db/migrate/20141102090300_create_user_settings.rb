@@ -4,9 +4,9 @@ class CreateUserSettings < ActiveRecord::Migration
       t.integer :user_id
       t.boolean :notification, default: true, null: false
       t.boolean :reply, default: true, null: false
-      t.boolean :favorite, defualt: false, null: false
-      t.boolean :direct_message, default: false, null: false
-      t.boolean :retweet, default: false, null: false
+      t.boolean :favorite, default: true, null: false
+      t.boolean :direct_message, default: true, null: false
+      t.boolean :retweet, default: true, null: false
       t.string  :device_token
 
       t.timestamps
