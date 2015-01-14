@@ -36,10 +36,9 @@ class UserstreamWorker
       return unless @user.user_setting.notification?
 
       if event[:event] == "favorite" && @user.user_setting.favorite?
-        p event[:source][:screen_name]
         message = "@" + event[:source][:screen_name] + "さんがお気に入りに追加しました"
+        @user.send_notification(message, "favorite", event)
         p "sent favorite push: #{@user.screen_name}"
-        @user.send_notification(message, "favorite", nil)
       end
     end
 
@@ -53,17 +52,17 @@ class UserstreamWorker
         if @user.user_setting.retweet?
           screen_name = status.user.screen_name
           message = "@" + screen_name + "さんがRTしました"
+          @user.send_notification(message, "retweet", status)
           p "sent retweet push: #{@user.screen_name}"
-          @user.send_notification(message, "retweet", nil)
         end
       elsif status.user.screen_name != @user.screen_name && status.text.include?("@" + @user.screen_name)
         if @user.user_setting.reply?
           screen_name = status.user.screen_name
           message = "@" + screen_name + ": " + status.text
-          p "sent reply push: #{@user.screen_name}"
           @user.unread_count.unread += 1
           @user.unread_count.save!
           @user.send_notification(message, "reply", status)
+          p "sent reply push: #{@user.screen_name}"
         end
       end
     end

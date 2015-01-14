@@ -68,6 +68,31 @@ class User < ActiveRecord::Base
             profile_image_url: status.user.profile_image_url.to_s,
             created_at: status.created_at.strftime("%Y-%m-%d %H:%M")
           }
+        when "retweet"
+          if status.retweeted_status.present?
+            notification.custom_data = {
+              id: status.retweeted_status.id.to_s,
+              text: status.retweeted_status.text,
+              favorited: status.favorited?,
+              screen_name: status.retweeted_status.user.screen_name,
+              name: status.retweeted_status.user.name,
+              profile_image_url: status.retweeted_status.user.profile_image_url.to_s,
+              created_at: status.retweeted_status.created_at.strftime("%Y-%m-%d %H:%M")
+            }
+          end
+        when "favorite"
+          if status[:target_object].present?
+            target = status[:target_object]
+            notification.custom_data = {
+              id: target[:id].to_s,
+              text: target[:text],
+              favorited: status[:favorited].to_i,
+              screen_name: target[:user][:screen_name],
+              name: target[:user][:name],
+              profile_image_url: target[:user][:profile_image_url],
+              created_at: target[:created_at].to_datetime.strftime("%Y-%m-%d %H:%M")
+            }
+          end
         end
       end
 
