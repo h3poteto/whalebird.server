@@ -18,6 +18,7 @@ class UserstreamWorker
     client.on_direct_message do |direct_message|
       @user = User.find(user_id)
       return unless @user.user_setting.notification?
+      next if @user.uid == direct_message.sender.id.to_s
 
       if @user.user_setting.direct_message?
         message = "DM @" + direct_message.sender.screen_name + ": " + direct_message.text
@@ -34,6 +35,7 @@ class UserstreamWorker
       ## notificationによりタスク終了
       @user = User.find(user_id)
       return unless @user.user_setting.notification?
+      next if @user.uid == event[:source][:id].to_s
 
       if event[:event] == "favorite" && @user.user_setting.favorite?
         message = "@" + event[:source][:screen_name] + "さんがお気に入りに追加しました"
