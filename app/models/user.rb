@@ -81,16 +81,16 @@ class User < ActiveRecord::Base
             }
           end
         when "favorite"
-          if status[:target_object].present?
-            target = status[:target_object]
+          if status.target_object.present?
+            target = status.target_object
             notification.custom_data = {
-              id: target[:id].to_s,
-              text: target[:text],
-              favorited: status[:favorited].to_i,
-              screen_name: target[:user][:screen_name],
-              name: target[:user][:name],
-              profile_image_url: target[:user][:profile_image_url],
-              created_at: target[:created_at].to_datetime.strftime("%Y-%m-%d %H:%M")
+              id: target.id.to_s,
+              text: target.text,
+              favorited: target.favorited?,
+              screen_name: target.user.screen_name,
+              name: target.user.name,
+              profile_image_url: target.user.profile_image_url,
+              created_at: target.created_at.to_datetime.strftime("%Y-%m-%d %H:%M")
             }
           end
         end
