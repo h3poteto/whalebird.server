@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
               favorited: target.favorited?,
               screen_name: target.user.screen_name,
               name: target.user.name,
-              profile_image_url: target.user.profile_image_url,
+              profile_image_url: target.user.profile_image_url.to_s,
               created_at: target.created_at.to_datetime.strftime("%Y-%m-%d %H:%M")
             }
           end
