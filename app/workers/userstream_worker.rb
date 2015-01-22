@@ -20,7 +20,8 @@ class UserstreamWorker
     client.user do |status|
       ## notificationによりタスク終了
       @user = User.find(user_id)
-      return unless @user.user_setting.notification?
+      return true unless @user.user_setting.notification?
+      return true if @user.user_setting.device_token.blank?
 
       case status
       when Twitter::Tweet
