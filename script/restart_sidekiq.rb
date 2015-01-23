@@ -20,7 +20,7 @@ if process_found
   exit
 end
 
-restart_result = `cd /srv/www/whalebird.server/whalebird.server && bundle exec sidekiq -d -C config/sidekiq.yml -e production`
+restart_result = `cd /srv/www/whalebird.server && bundle exec sidekiq -d -C config/sidekiq.yml -e production`
 log = Time.now.to_s + ' sidekiq is restarted.'
 `echo "#{log}" >>"#{log_file}"`
 `echo "#{restart_result}" >>"#{log_file}"`
