@@ -2,7 +2,7 @@
 :concurrency: 100
 :pidfile: ./tmp/pids/sidekiq.pid
 :logfile: ./log/sidekiq.log
-:retry: 2100000000
+:retry: 25
 :queues:
   - [default, 100]
   - loop
