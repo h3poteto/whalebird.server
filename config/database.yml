@@ -52,3 +52,4 @@ production:
   database: <%= ENV["DB_WHALEBIRD_PRODUCTION"] || "whalebird_production" %>
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
+  pool: <%= ENV["DB_POOL"] || 10 %>
