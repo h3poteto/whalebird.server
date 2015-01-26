@@ -11,7 +11,7 @@ class UserSetting < ActiveRecord::Base
   end
 
   def activate_notification?
-    if notification_changed? && notification
+    if notification_changed? && notification?
       return true
     else
       return false
