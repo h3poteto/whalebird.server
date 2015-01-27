@@ -71,7 +71,7 @@ class UserstreamWorker
       puts error.class
       puts error.message
       puts error.backtrace
-      puts "retry start #{user.screen_name}"
+      puts "retry start #{@user.screen_name}"
       retry
 
     end
