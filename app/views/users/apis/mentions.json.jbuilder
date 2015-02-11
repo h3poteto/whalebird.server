@@ -6,4 +6,7 @@ json.array!(@response) do |res|
     json.extract! res.user, :screen_name, :name
     json.profile_image_url res.user.profile_image_url.to_s
   end
+  if res.media.present?
+    json.media res.media.map {|m| m.media_url.to_s }
+  end
 end

@@ -66,7 +66,8 @@ class User < ActiveRecord::Base
             screen_name: status.user.screen_name,
             name: status.user.name,
             profile_image_url: status.user.profile_image_url.to_s,
-            created_at: status.created_at.strftime("%Y-%m-%d %H:%M")
+            created_at: status.created_at.strftime("%Y-%m-%d %H:%M"),
+            media: status.media.map {|m| m.media_url.to_s }
           }
         when "retweet"
           if status.retweeted_status.present?
@@ -77,7 +78,8 @@ class User < ActiveRecord::Base
               screen_name: status.retweeted_status.user.screen_name,
               name: status.retweeted_status.user.name,
               profile_image_url: status.retweeted_status.user.profile_image_url.to_s,
-              created_at: status.retweeted_status.created_at.strftime("%Y-%m-%d %H:%M")
+              created_at: status.retweeted_status.created_at.strftime("%Y-%m-%d %H:%M"),
+              media: status.retweeted_status.media.map {|m| m.media_url.to_s }
             }
           end
         when "favorite"
@@ -90,7 +92,8 @@ class User < ActiveRecord::Base
               screen_name: target.user.screen_name,
               name: target.user.name,
               profile_image_url: target.user.profile_image_url.to_s,
-              created_at: target.created_at.to_datetime.strftime("%Y-%m-%d %H:%M")
+              created_at: target.created_at.to_datetime.strftime("%Y-%m-%d %H:%M"),
+              media: target.media.map {|m| m.media_url.to_s}
             }
           end
         end

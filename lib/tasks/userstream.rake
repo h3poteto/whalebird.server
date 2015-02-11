@@ -20,12 +20,13 @@ namespace :userstream do
     end
 
     client.user do |status|
+      binding.pry
       case status
       when Twitter::DirectMessage
-        debugger
-        status
+        binding.pry
+        p status
       when Twitter::Streaming::Event
-        debugger
+        binding.pry
         p status
       end
     end
