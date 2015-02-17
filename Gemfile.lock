@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/sferik/twitter.git
-  revision: bf6a90d2eb70c29b61de112a308fd0abba8e1484
+  revision: 43ed6b708124bd8b1f118c018bea715838675c12
   branch: master
   specs:
-    twitter (5.13.0)
+    twitter (5.14.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
       equalizer (~> 0.0.9)
@@ -43,7 +43,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    addressable (2.3.6)
+    addressable (2.3.7)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
     better_errors (2.0.0)
@@ -392,7 +392,7 @@ GEM
     simple_form (3.0.2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
-    simple_oauth (0.3.0)
+    simple_oauth (0.3.1)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
