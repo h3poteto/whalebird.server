@@ -399,6 +399,8 @@ GEM
       tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
     spring (1.1.3)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -491,6 +493,7 @@ DEPENDENCIES
   simple_form
   sinatra
   spring
+  spring-commands-rspec
   therubyracer
   turbolinks
   tweetstream
