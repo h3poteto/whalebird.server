@@ -1,3 +1,0 @@
-dependencies:
-  pre:
-    - rvm use 2.0.0 --default
