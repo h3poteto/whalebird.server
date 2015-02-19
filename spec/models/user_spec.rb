@@ -31,4 +31,38 @@ RSpec.describe User, :type => :model do
     it { should have_db_index(:email).unique(true) }
     it { should have_db_index(:reset_password_token).unique(true) }
   end
+
+  describe 'when create' do
+    context 'with valid attributes' do
+      subject { build(:user) }
+      it "should create a new instance" do
+        expect(subject.save).not_to be_falsey
+      end
+    end
+  end
+
+  describe 'when update' do
+    context 'after create' do
+      before do
+        @attr = attributes_for(:user)
+        @user = create(:user)
+        @user.update_attributes(@attr)
+      end
+      subject { User.find(@user.id) }
+      it "should new values" do
+        @attr.each do |k,v|
+          expect(subject.send(k)).to eq(v) unless k == :password
+        end
+      end
+    end
+  end
+
+  describe 'when delete', :delete do
+    subject { create(:user) }
+    it "should delete" do
+      id = subject.id
+      expect(subject.destroy).not_to be_falsey
+      expect { User.find(id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end
