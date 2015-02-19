@@ -11,6 +11,5 @@
  * file per style scope.
  *
  *= require bootstrap_and_overrides
- *= require_tree ./application
  *= require_self
  */
