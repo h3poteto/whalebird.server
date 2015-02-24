@@ -3,6 +3,11 @@ module RequestHelpers
   def login(admin)
     login_as admin, scope: :admin
   end
+
+  def login_user(user)
+    login_as user, scope: :user
+  end
+
   def set_omniauth(user)
     OmniAuth.config.test_mode = true
 
