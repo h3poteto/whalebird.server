@@ -54,7 +54,6 @@ RSpec.configure do |config|
 
   # for Devise
   config.include Devise::TestHelpers, :type => :controller
-  config.extend ControllerMacros, :type => :controller
   config.include RequestHelpers, :type => :request
 
   config.include Capybara::DSL
