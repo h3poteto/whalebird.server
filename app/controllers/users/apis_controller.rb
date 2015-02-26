@@ -50,6 +50,7 @@ class Users::ApisController < UsersController
   def user
     begin
       @response = @client.user(@settings[:screen_name])
+      @follower = @client.friendship?(@response.id, @user.uid.to_i)
     rescue
       render json: [], status: 500
     end
