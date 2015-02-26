@@ -114,5 +114,13 @@ RSpec.describe Users::ApisController, :type => :routing do
     it "routes to #direct_message_create" do
       expect(:post => "/users/apis/direct_message_create").to route_to("users/apis#direct_message_create")
     end
+
+    it "routes to #follow" do
+      expect(:post => "/users/apis/follow").to route_to("users/apis#follow")
+    end
+
+    it "routes to #unfollow" do
+      expect(:post => "/users/apis/unfollow").to route_to("users/apis#unfollow")
+    end
   end
 end

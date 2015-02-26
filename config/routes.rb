@@ -38,6 +38,8 @@ Rails.application.routes.draw do
         post :delete
         post :update_settings
         post :direct_message_create
+        post :follow
+        post :unfollow
       end
     end
   end

@@ -147,6 +147,16 @@ class Users::ApisController < UsersController
     render action: :index
   end
 
+  def follow
+    @response = @client.follow(@settings[:screen_name])
+    render action: :index
+  end
+
+  def unfollow
+    @response = @client.unfollow(@settings[:screen_name])
+    render action: :index
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
