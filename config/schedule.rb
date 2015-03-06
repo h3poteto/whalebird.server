@@ -24,8 +24,9 @@
 set :output, 'log/crontab.log'
 # ジョブの実行環境の指定
 set :environment, :production
+env :PATH, ENV['PATH']
 
 
-every 1.day, :at => '19:00 pm' do
+every 1.day, :at => '23:00 pm' do
   rake "image:clean"
 end
