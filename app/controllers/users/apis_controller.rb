@@ -143,7 +143,7 @@ class Users::ApisController < UsersController
   end
 
   def direct_message_create
-    @response = @client.direct_message_create(@settings[:screen_name], @settings[:text])
+    @response = @client.create_direct_message(@settings[:screen_name], @settings[:text])
     render action: :index
   end
 
