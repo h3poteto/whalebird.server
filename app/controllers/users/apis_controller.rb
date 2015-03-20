@@ -94,6 +94,13 @@ class Users::ApisController < UsersController
         attachment = Attachment.where(filename: @settings[:media].to_s).first
         file = File.open(attachment.filename.path)
         @client.update_with_media(params[:status], file)
+      elsif @settings[:medias].present?
+        medias = []
+        @settings[:medias].each do |media|
+          attachment = Attachment.where(filename: media.to_s).first
+          medias.push(File.new(attachment.filename.path))
+        end
+        @client.update_with_media(params[:status], medias)
       else
         @response = @client.update(params[:status].to_s, @settings)
       end
