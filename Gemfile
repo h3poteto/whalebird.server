@@ -53,7 +53,6 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'whenever', :require => false
 gem 'ruby_rncryptor'
-gem 'rb-readline'
 
 group :development, :test do
   gem 'pry-byebug'
