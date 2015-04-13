@@ -1,8 +1,5 @@
 ja:
   activerecord:
-    models:
-      user: user  #g
-
     attributes:
       user:
         current_sign_in_at: current_sign_in_at  #g
