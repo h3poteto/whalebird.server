@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_one :user_setting
   has_one :unread_count
 
+  after_create :create_unread
+
   APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
 
   def self.create_unique_string
@@ -104,5 +106,10 @@ class User < ActiveRecord::Base
 
       APN.push(notification)
     end
+  end
+
+  private
+  def create_unread
+    self.create_unread_count
   end
 end

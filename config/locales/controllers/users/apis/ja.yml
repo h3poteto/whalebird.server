@@ -1,5 +1,6 @@
 ja:
   users:
     apis:
-      list_timeline:
-        error_message: "権限がありません"
+      twitter:
+        notfound: "存在しないページです"
+        foridden: "権限がありません"

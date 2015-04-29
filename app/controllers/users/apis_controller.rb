@@ -26,13 +26,9 @@ class Users::ApisController < UsersController
   end
 
   def list_timeline
-    begin
-      @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
-      @all_response = @client.list_timeline(@settings)
-      @response = @all_response[0..(params[:settings][:count].to_i - 1)]
-    rescue
-      render json: {errors: I18n.t("users.apis.list_timeline.error_message")}, status: 500
-    end
+    @settings[:count] = (params[:settings][:count].to_f * 1.05).to_i if params[:settings][:count].present?
+    @all_response = @client.list_timeline(@settings)
+    @response = @all_response[0..(params[:settings][:count].to_i - 1)]
   end
 
   def mentions
