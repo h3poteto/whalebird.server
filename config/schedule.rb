@@ -21,7 +21,7 @@
 # Learn more: http://github.com/javan/whenever
 
 # 出力先のログファイルの指定
-set :output, 'log/crontab.log'
+set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 # ジョブの実行環境の指定
 set :environment, :production
 env :PATH, ENV['PATH']
@@ -29,4 +29,8 @@ env :PATH, ENV['PATH']
 
 every 1.day, :at => '23:00 pm' do
   rake "image:clean"
+end
+
+every '*/1 * * * *' do
+  runner "MonitorSidekiq.check_and_restart"
 end

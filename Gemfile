@@ -75,3 +75,13 @@ group :test do
   gem 'faker'
   gem 'faker-japanese'
 end
+
+group :development do
+  # Deploy with Capistrano
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-sidekiq'
+end
