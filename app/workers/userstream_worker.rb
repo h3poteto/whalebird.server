@@ -71,9 +71,10 @@ class UserstreamWorker
       puts error.class
       puts error.message
       puts error.backtrace
-      puts "retry start #{@user.screen_name}"
-      retry
-
+      if error.class == JSON::ParserError
+        puts "retry start #{@user.screen_name}"
+        retry
+      end
     end
   end
 

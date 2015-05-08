@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from Twitter::Error::Unauthorized, with: :render_unauthorized
+  rescue_from Twitter::Error::BadRequest, with: :render_unauthorized
   rescue_from Twitter::Error::NotFound, with: :render_notfound
   rescue_from Twitter::Error::Forbidden, with: :render_forbidden
 
   def after_sign_in_path_for(resource)
     case resource
     when User
-      # TODO: ログインしてたらユーザ情報でも出すか，ログアウトリンクを
       users_apis_path
     when Admin
       sidekiq_web_path
@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base
 
 
   def render_unauthorized
+    current_user.user_setting.update_attributes(notification: false)
+    sign_out current_user
     render nothing: true, status: 401
   end
 

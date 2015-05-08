@@ -172,6 +172,9 @@ class Users::ApisController < UsersController
     end
 
     def set_twitter
+      if @user.oauth_token.blank? || @user.oauth_token_secret.blank?
+        raise Twitter::Error::Unauthorized
+      end
       @client = Twitter::REST::Client.new do |config|
         config.consumer_key = ENV["TWITTER_CLIENT_ID"]
         config.consumer_secret = ENV["TWITTER_CLIENT_SECRET"]

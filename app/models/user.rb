@@ -30,6 +30,13 @@ class User < ActiveRecord::Base
         oauth_token_secret: auth.credentials.secret,
         screen_name: auth.extra.access_token.params[:screen_name]
       )
+    else
+      user.update_attributes!(
+        name:     auth.info.nickname,
+        oauth_token: auth.credentials.token,
+        oauth_token_secret: auth.credentials.secret,
+        screen_name: auth.extra.access_token.params[:screen_name]
+      )
     end
     user
   end
