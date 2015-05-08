@@ -25,6 +25,7 @@ set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 # ジョブの実行環境の指定
 set :environment, :production
 env :PATH, ENV['PATH']
+job_type :rails4_runner, "cd :path && bin/rails runner -e :environment :task :output"
 
 
 every 1.day, :at => '23:00 pm' do
@@ -32,5 +33,5 @@ every 1.day, :at => '23:00 pm' do
 end
 
 every '*/1 * * * *' do
-  runner "MonitorSidekiq.check_and_restart"
+  rails4_runner "MonitorSidekiq.check_and_restart"
 end
