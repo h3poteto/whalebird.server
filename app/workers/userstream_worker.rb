@@ -72,7 +72,7 @@ class UserstreamWorker
       puts error.message
       puts error.backtrace
       ExceptionNotifier.notify_exception(error)
-      if error.class == JSON::ParserError
+      if error.class == JSON::ParserError || error.class == EOFError
         puts "retry start #{@user.screen_name}"
         retry
       end
