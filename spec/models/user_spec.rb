@@ -39,6 +39,14 @@ RSpec.describe User, :type => :model do
         expect(subject.save).not_to be_falsey
       end
     end
+
+    describe "create unread" do
+      let!(:user) { create(:user) }
+      it "should exist unread" do
+        expect(user.unread_count.present?).to be_truthy
+        expect(user.unread_count.unread).to eq(0)
+      end
+    end
   end
 
   describe 'when update' do
