@@ -13,6 +13,7 @@ class UserstreamWorker
     if !@user.user_setting.notification? || @user.user_setting.device_token.blank?
       @user.update_attributes!(userstream: false)
       p "stop #{@user.name}"
+      return true
     end
     client = Twitter::Streaming::Client.new do |config|
       config.consumer_key = ENV["TWITTER_CLIENT_ID"]
@@ -30,6 +31,7 @@ class UserstreamWorker
         if !user.user_setting.notification? || user.user_setting.device_token.blank?
           user.update_attributes!(userstream: false)
           p "stop #{user.name}"
+          return true
         end
 
         case status
