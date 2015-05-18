@@ -31,10 +31,10 @@ class ApplicationController < ActionController::Base
   end
 
   def render_notfound
-    render json: {errors: I18n.t("users.apis.twitter.notfound")}, status: 500
+    render json: {errors: I18n.t("users.apis.twitter.notfound")}, status: 499
   end
 
   def render_forbidden
-    render json: {errors: I18n.t("users.apis.twitter.forbidden")}, status: 500
+    render json: {errors: I18n.t("users.apis.twitter.forbidden")}, status: 499
   end
 end
