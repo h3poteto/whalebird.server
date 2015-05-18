@@ -23,18 +23,33 @@ RSpec.describe UserSetting, :type => :model do
   end
 
   describe 'when create' do
-    before(:each) { UserSetting.skip_callback(:create, :after, :start_userstream) }
     context 'with valid attributes' do
       subject { build(:user_setting) }
       it "should create a new instance" do
         expect(subject.save).not_to be_falsey
       end
     end
+
+    describe "start userstream" do
+      context "user_setting notification is true" do
+        it "should call start_userstream" do
+          user_setting = build(:user_setting_notification_on)
+          expect(user_setting).to receive(:start_userstream)
+          user_setting.save!
+        end
+      end
+
+      context "user_setting notification is false" do
+        it "should call start_userstream" do
+          user_setting = build(:user_setting_notification_off)
+          expect(user_setting).to receive(:start_userstream)
+          user_setting.save!
+        end
+      end
+    end
   end
 
   describe 'when update' do
-    before(:each) { UserSetting.skip_callback(:update, :before, :start_userstream) }
-    before(:each) { UserSetting.skip_callback(:create, :after, :start_userstream) }
     context 'after create' do
       before do
         @attr = attributes_for(:user_setting)
@@ -49,19 +64,46 @@ RSpec.describe UserSetting, :type => :model do
       end
     end
 
-    context 'notification on' do
-      before { @user_setting = create(:user_setting_notification_off) }
-      it "should be true" do
-        @user_setting.notification = true
-        expect(@user_setting.activate_notification?).to be_truthy
+    describe "start userstream" do
+      before(:each) { UserSetting.skip_callback(:create, :after, :start_userstream) }
+      let!(:user) { create(:user) }
+      let!(:user_setting) { create(:user_setting_notification_on, user_id: user.id) }
+      context "when userstream is not running" do
+        before(:each) do
+          user.update_attributes!(userstream: false)
+        end
+        context "change settings" do
+          it "should call start_userstream" do
+            user_setting.notification = false
+            expect(user_setting).to receive(:start_userstream)
+            user_setting.save!
+          end
+        end
+        context "do not change settings" do
+          it "should call start_userstream" do
+            expect(user_setting).to receive(:start_userstream)
+            user_setting.save!
+          end
+        end
       end
-    end
 
-    context 'notification off' do
-      before { @user_setting = create(:user_setting_notification_on) }
-      it "should be false" do
-        @user_setting.notification = false
-        expect(@user_setting.activate_notification?).to be_falsey
+      context "when userstream is running" do
+        before(:each) do
+          user.update_attributes!(userstream: true)
+        end
+        context "change settings" do
+          it "should not call start_userstream" do
+            user_setting.notification = false
+            expect(user_setting).not_to receive(:start_userstream)
+            user_setting.save!
+          end
+        end
+        context "do not change settings" do
+          it "should not call start_userstream" do
+            expect(user_setting).not_to receive(:start_userstream)
+            user_setting.save!
+          end
+        end
       end
     end
   end

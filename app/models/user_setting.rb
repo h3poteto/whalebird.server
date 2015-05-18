@@ -7,14 +7,11 @@ class UserSetting < ActiveRecord::Base
   validates :user_id, presence: true
 
   def start_userstream
-    UserstreamWorker.perform_in(10.seconds, user_id)
+    user.update_attributes!(userstream: true)
+    UserstreamWorker.perform_in(10.seconds, user_id) unless Rails.env.test?
   end
 
   def activate_notification?
-    if notification_changed? && notification?
-      return true
-    else
-      return false
-    end
+    !user.userstream?
   end
 end

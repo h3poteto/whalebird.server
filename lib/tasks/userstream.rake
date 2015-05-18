@@ -5,6 +5,7 @@ namespace :userstream do
 
     @user_settings = UserSetting.where(notification: true)
     @user_settings.each do |user_setting|
+      user_setting.user.update_attributes!(userstream: true)
       UserstreamWorker.perform_in(10.seconds, user_setting.user_id)
     end
   end

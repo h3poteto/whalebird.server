@@ -142,9 +142,6 @@ class Users::ApisController < UsersController
       setting = UserSetting.new(permitted_params)
       @user.user_setting = setting
       @user.save!
-      count = UnreadCount.new
-      count.user = @user
-      count.save!
     end
     render action: :index
   end

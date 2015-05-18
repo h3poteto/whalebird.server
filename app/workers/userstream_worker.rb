@@ -10,8 +10,10 @@ class UserstreamWorker
     @user = User.find(user_id)
     p @user.name
 
-    return true if !@user.user_setting.notification?
-    return true if @user.user_setting.device_token.blank?
+    if !@user.user_setting.notification? || @user.user_setting.device_token.blank?
+      @user.update_attributes!(userstream: false)
+      p "stop #{@user.name}"
+    end
     client = Twitter::Streaming::Client.new do |config|
       config.consumer_key = ENV["TWITTER_CLIENT_ID"]
       config.consumer_secret = ENV["TWITTER_CLIENT_SECRET"]
@@ -25,8 +27,10 @@ class UserstreamWorker
       client.user do |status|
         ## notificationによりタスク終了
         user = User.find(user_id)
-        return true if !user.user_setting.notification?
-        return true if user.user_setting.device_token.blank?
+        if !user.user_setting.notification? || user.user_setting.device_token.blank?
+          user.update_attributes!(userstream: false)
+          p "stop #{user.name}"
+        end
 
         case status
         when Twitter::Tweet
@@ -75,6 +79,9 @@ class UserstreamWorker
       if error.class == JSON::ParserError || error.class == EOFError
         puts "retry start #{@user.screen_name}"
         retry
+      else
+        @user.update_attributes!(userstream: false)
+        p "stop #{@user.name}"
       end
     end
   end

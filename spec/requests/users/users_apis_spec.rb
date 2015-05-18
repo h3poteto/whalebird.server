@@ -50,7 +50,39 @@ RSpec.describe "Users::Apis", :type => :request do
         expect(response).to have_http_status(200)
         json = JSON.parse(response.body)
         expect(json.length).to eq(50)
-        expect(json.first["user"]["screen_name"]).to eq(@user.screen_name)
+        if json.first["retweeted"].blank?
+          expect(json.first["user"]["screen_name"]).to eq(@user.screen_name)
+        else
+          expect(json.first["retweeted"]["screen_name"]).to eq(@user.screen_name)
+        end
+      end
+    end
+
+    describe "start userstream" do
+      describe "when update" do
+        before(:each) { UserSetting.skip_callback(:create, :after, :start_userstream) }
+        let(:user_setting_params) { attributes_for(:user_setting_notification_on, user_id: @user.id) }
+        let!(:user_setting) { create(:user_setting, user_setting_params) }
+        context "when userstream is not running" do
+          before(:each) do
+            @user.update_attributes!(userstream: false)
+          end
+          context "change settings" do
+            it "should start userstream" do
+              new_params = attributes_for(:user_setting_notification_off, user_id: @user.id)
+              post update_settings_users_apis_path(format: :json, params: {settings: new_params})
+              expect(response).to have_http_status(200)
+              expect(@user.userstream?).to be_truthy
+            end
+          end
+          context "do not change settings" do
+            it "should start userstream" do
+              post update_settings_users_apis_path(format: :json, params: {settings: user_setting_params})
+              expect(response).to have_http_status(200)
+              expect(@user.userstream?).to be_truthy
+            end
+          end
+        end
       end
     end
   end
