@@ -10,6 +10,10 @@ class Users::SessionsController < Devise::SessionsController
     super
   end
 
+  def destroy
+    current_user.user_setting.stop_userstream
+    super
+  end
 
   private
     def check_application_key

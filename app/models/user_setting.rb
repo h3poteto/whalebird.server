@@ -11,6 +11,10 @@ class UserSetting < ActiveRecord::Base
     UserstreamWorker.perform_in(10.seconds, user_id) unless Rails.env.test?
   end
 
+  def stop_userstream
+    update_attributes!(notification: false)
+  end
+
   def activate_notification?
     !user.userstream?
   end
