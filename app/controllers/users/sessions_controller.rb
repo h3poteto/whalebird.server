@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def destroy
-    current_user.user_setting.stop_userstream
+    current_user.user_setting.stop_userstream if current_user.user_setting.present?
     super
   end
 
