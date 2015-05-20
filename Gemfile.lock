@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/sferik/twitter.git
-  revision: b299925d22d9ccf75c50328cea34e3f0194e1a33
+  revision: 2caff0be3cd725774a4e2558b673d5178c60a324
   branch: master
   specs:
     twitter (6.0.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
       equalizer (~> 0.0.9)
-      http (~> 0.8.4)
+      http (~> 0.7.1)
       http-form_data (~> 1.0)
       http_parser.rb (~> 0.6.0)
       memoizable (~> 0.4.0)
@@ -44,7 +44,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    addressable (2.3.8)
+    addressable (2.3.7)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
     better_errors (2.0.0)
@@ -118,7 +118,7 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.22)
       unf (>= 0.0.5, < 1.0.0)
-    equalizer (0.0.11)
+    equalizer (0.0.10)
     erubis (2.7.0)
     exception_notification (4.1.0)
       actionmailer (>= 3.0.4)
@@ -141,14 +141,12 @@ GEM
     houston (2.2.1)
       commander (~> 4.1)
       json
-    http (0.8.10)
-      addressable (~> 2.3)
-      http-cookie (~> 1.0)
-      http-form_data (~> 1.0.1)
+    http (0.7.2)
+      http-form_data (~> 1.0.0)
       http_parser.rb (~> 0.6.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    http-form_data (1.0.1)
+    http-form_data (1.0.0)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
     i18n_generators (1.2.1)
