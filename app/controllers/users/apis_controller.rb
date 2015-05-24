@@ -131,7 +131,7 @@ class Users::ApisController < UsersController
   end
 
   def delete
-    @response = @client.status_destroy(@settings[:id])
+    @response = @client.destroy_status(@settings[:id])
     render action: :index
   end
 
