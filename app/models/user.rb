@@ -11,8 +11,6 @@ class User < ActiveRecord::Base
 
   after_create :create_unread
 
-  APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
-
   def self.create_unique_string
     SecureRandom.uuid
   end
@@ -48,18 +46,12 @@ class User < ActiveRecord::Base
 
   def send_notification(message, category, status=nil)
     if user_setting.device_token.present?
-      APN.certificate = File.read(Settings.push.certification_path)
-      notification = Houston::Notification.new(device: user_setting.device_token)
-      notification.alert = message
-      notification.badge = unread_count.unread
-      notification.sound = "sosumi.aiff"
-      notification.category = category
-      notification.content_available = true
+      custom_data = {}
 
       if status.present?
         case category
         when "direct_message"
-          notification.custom_data = {
+          custom_data = {
             id: status.id.to_s,
             text: status.text,
             screen_name: status.sender.screen_name,
@@ -68,7 +60,7 @@ class User < ActiveRecord::Base
             created_at: status.created_at.strftime("%Y-%m-%d %H:%M")
           }
         when "reply"
-          notification.custom_data = {
+          custom_data = {
             id: status.id.to_s,
             text: status.text,
             favorited: status.favorited?,
@@ -81,7 +73,7 @@ class User < ActiveRecord::Base
           }
         when "retweet"
           if status.retweeted_status.present?
-            notification.custom_data = {
+            custom_data = {
               id: status.retweeted_status.id.to_s,
               text: status.retweeted_status.text,
               favorited: status.favorited?,
@@ -96,7 +88,7 @@ class User < ActiveRecord::Base
         when "favorite"
           if status.target_object.present?
             target = status.target_object
-            notification.custom_data = {
+            custom_data = {
               id: target.id.to_s,
               text: target.text,
               favorited: target.favorited?,
@@ -111,7 +103,7 @@ class User < ActiveRecord::Base
         end
       end
 
-      APN.push(notification)
+      PushNotificationWorker.perform_async(user_setting.device_token, message, unread_count.unread, category, custom_data)
     end
   end
 
