@@ -40,7 +40,7 @@ class UserstreamWorker
             if user.user_setting.retweet?
               screen_name = status.user.screen_name
               message = "@" + screen_name + "さんがRTしました"
-              user.send_notification(message, "retweet", status)
+              PushNotificationWorker.perform_async(user.id, message, "retweet", status)
               p "sent retweet push: #{user.screen_name}"
             end
           elsif status.user.screen_name != user.screen_name && status.text.include?("@" + user.screen_name)
@@ -49,7 +49,7 @@ class UserstreamWorker
               message = "@" + screen_name + ": " + status.text
               user.unread_count.unread += 1
               user.unread_count.save!
-              user.send_notification(message, "reply", status)
+              PushNotificationWorker.perform_async(user.id, message, "reply", status)
               p "sent reply push: #{user.screen_name}"
             end
           end
@@ -60,14 +60,14 @@ class UserstreamWorker
             p "sent direct message push: #{user.screen_name}"
             user.unread_count.unread += 1
             user.unread_count.save!
-            user.send_notification(message, "direct_message", status)
+            PushNotificationWorker.perform_async(user.id, message, "direct_message", status)
           end
         when Twitter::Streaming::Event
           next if user.uid == status.source.id.to_s
 
           if status.name == :favorite && user.user_setting.favorite?
             message = "@" + status.source.screen_name + "さんがお気に入りに追加しました"
-            user.send_notification(message, "favorite", status)
+            PushNotificationWorker.perform_async(user.id, message, "favorite", status)
             p "sent favorite push: #{user.screen_name}"
           end
         end
