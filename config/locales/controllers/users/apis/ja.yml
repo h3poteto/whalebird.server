@@ -3,4 +3,4 @@ ja:
     apis:
       twitter:
         notfound: "存在しないページです"
-        forbidden: "権限がありません。もう一度ログインしてください"
+        forbidden: "許可されていないリクエストです"
