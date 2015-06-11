@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   rescue_from Twitter::Error::BadRequest, with: :render_unauthorized
   rescue_from Twitter::Error::NotFound, with: :render_notfound
   rescue_from Twitter::Error::Forbidden, with: :render_forbidden
+  rescue_from Twitter::Error::TooManyRequests, with: :render_toomany
 
   def after_sign_in_path_for(resource)
     case resource
@@ -36,5 +37,9 @@ class ApplicationController < ActionController::Base
 
   def render_forbidden
     render json: {errors: I18n.t("users.apis.twitter.forbidden")}, status: 499
+  end
+
+  def render_toomany
+    render json: {errors: I18n.t("users.apis.twitter.toomany")}, status: 499
   end
 end
