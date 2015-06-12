@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   rescue_from Twitter::Error::NotFound, with: :render_notfound
   rescue_from Twitter::Error::Forbidden, with: :render_forbidden
   rescue_from Twitter::Error::TooManyRequests, with: :render_toomany
+  rescue_from Twitter::Error::ServiceUnavailable, with: :render_toomany
 
   def after_sign_in_path_for(resource)
     case resource
