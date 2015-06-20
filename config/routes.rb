@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         post :direct_message_create
         post :follow
         post :unfollow
+        post :read
       end
     end
   end

@@ -63,5 +63,30 @@ RSpec.describe "Users::Apis", :type => :request do
         end
       end
     end
+
+    describe "read" do
+      context "when count is empty" do
+        before(:each) do
+          @user.unread_count.unread = 0
+          @user.unread_count.save!
+        end
+        it "should not decrement and not error" do
+          post read_users_apis_path(format: :json)
+          expect(response).to have_http_status(200)
+          expect(@user.unread_count.unread).to eq(0)
+        end
+      end
+      context "when count is 100" do
+        before(:each) do
+          @user.unread_count.unread = 100
+          @user.unread_count.save!
+        end
+        it "should decrement" do
+          post read_users_apis_path(format: :json)
+          expect(response).to have_http_status(200)
+          expect(@user.unread_count.unread).to eq(99)
+        end
+      end
+    end
   end
 end

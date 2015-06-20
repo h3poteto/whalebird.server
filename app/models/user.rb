@@ -11,6 +11,11 @@ class User < ActiveRecord::Base
 
   after_create :create_unread
 
+
+  def decrement_unread
+    unread_count.decrement
+  end
+
   def self.create_unique_string
     SecureRandom.uuid
   end

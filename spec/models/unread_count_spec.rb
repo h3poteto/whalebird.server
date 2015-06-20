@@ -46,4 +46,24 @@ RSpec.describe UnreadCount, :type => :model do
       expect { UnreadCount.find(id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe "decrement" do
+    before do
+      @user = create(:user)
+    end
+    context "when unread is 100" do
+      before do
+        @user.unread_count.unread = 100
+        @user.unread_count.save!
+      end
+      it "shoud decrement" do
+        expect{ @user.unread_count.decrement }.to change{ @user.unread_count.unread }.from(100).to(99)
+      end
+    end
+    context "when unread is 0" do
+      it "should not decrement" do
+        expect{ @user.unread_count.decrement }.not_to change{ @user.unread_count.unread }
+      end
+    end
+  end
 end

@@ -161,6 +161,11 @@ class Users::ApisController < UsersController
     render action: :index
   end
 
+  def read
+    current_user.decrement_unread
+    render action: :index
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
