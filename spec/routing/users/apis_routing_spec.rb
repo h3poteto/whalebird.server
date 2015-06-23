@@ -67,6 +67,10 @@ RSpec.describe Users::ApisController, :type => :routing do
       expect(:get => "/users/apis/friends").to route_to("users/apis#friends")
     end
 
+    it "routes to #friend_ids" do
+      expect(:get => "/users/apis/friend_ids").to route_to("users/apis#friend_ids")
+    end
+
     it "routes to #followers" do
       expect(:get => "/users/apis/followers").to route_to("users/apis#followers")
     end
@@ -121,6 +125,10 @@ RSpec.describe Users::ApisController, :type => :routing do
 
     it "routes to #unfollow" do
       expect(:post => "/users/apis/unfollow").to route_to("users/apis#unfollow")
+    end
+
+    it "routes to #read" do
+      expect(:post => "/users/apis/read").to route_to("users/apis#read")
     end
   end
 end

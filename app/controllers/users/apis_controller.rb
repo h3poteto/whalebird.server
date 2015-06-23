@@ -74,6 +74,10 @@ class Users::ApisController < UsersController
     @response = @client.friends(@settings)
   end
 
+  def friend_ids
+    @response = @client.friend_ids(@settings)
+  end
+
   def followers
     @response = @client.followers(@settings)
   end
