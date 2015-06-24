@@ -26,7 +26,7 @@ Rails.application.routes.draw do
         get :user_timeline
         get :user_favorites
         get :friends
-        get :friend_ids
+        get :friend_screen_names
         get :followers
         get :direct_messages
         get :conversations

@@ -74,8 +74,13 @@ class Users::ApisController < UsersController
     @response = @client.friends(@settings)
   end
 
-  def friend_ids
-    @response = @client.friend_ids(@settings)
+  def friend_screen_names
+    begin
+      @response = extend_all_friends(@settings)
+    rescue
+      ## APIのリソース的に例外になる可能性はあるが，特にエラーを出したいほどのものでもない
+      @response = []
+    end
   end
 
   def followers
@@ -211,6 +216,18 @@ class Users::ApisController < UsersController
       result.push(status)
       result.concat(extend_back_conversations(status.in_reply_to_status_id)) if status.in_reply_to_status_id.present?
       return result
+    end
+
+    def extend_all_friends(settings)
+      followings = []
+      following_ids = @client.friend_ids(settings).to_a
+      loop_count = (following_ids.size - 1) / 100 + 1
+      loop_count.times do
+        ids_temp = following_ids.pop(100)
+        accounts_temp = @client.users(ids_temp)
+        followings.concat(accounts_temp)
+      end
+      followings
     end
 
     def check_application_key
