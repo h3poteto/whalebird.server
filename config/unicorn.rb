@@ -19,7 +19,7 @@ working_directory current_path
 # ダウンタイムなくす
 preload_app true
 
-timeout 45
+timeout 150
 
 
 before_fork do |server, worker|
