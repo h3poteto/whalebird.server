@@ -80,6 +80,7 @@ class UserstreamWorker
       ExceptionNotifier.notify_exception(error)
       if error.class == JSON::ParserError || error.class == EOFError || error.class == Twitter::Error::ClientError || error.class == Twitter::Error::ServerError || error.class == Errno::EPIPE || error.class == Timeout::Error || error.class == Twitter::Error::ServiceUnavailable
         puts "retry start #{@user.screen_name}"
+        sleep 10
         retry
       else
         @user.update_attributes!(userstream: false)
