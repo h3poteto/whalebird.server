@@ -23,7 +23,13 @@ ExceptionNotification.configure do |config|
     :sender_address       => ENV["SERVER_EMAIL"],
     :exception_recipients => [ENV["EXCEPTION_EMAIL"]]
   }
-
+  config.add_notifier :slack, {
+    :webhook_url => ENV["SLACK_WEBHOOK_URL"],
+    :channel => "#asumibot",
+    :additional_parameters => {
+      :mrkdwn => true
+    }
+  }
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
   # config.add_notifier :campfire, {
   #   :subdomain => 'my_subdomain',
@@ -42,5 +48,5 @@ ExceptionNotification.configure do |config|
   #   :url => 'http://example.com:5555/hubot/path',
   #   :http_method => :post
   # }
-
+  ExceptionNotifier::Rake.configure
 end
