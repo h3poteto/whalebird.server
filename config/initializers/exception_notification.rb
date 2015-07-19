@@ -25,7 +25,7 @@ ExceptionNotification.configure do |config|
   }
   config.add_notifier :slack, {
     :webhook_url => ENV["SLACK_WEBHOOK_URL"],
-    :channel => "#asumibot",
+    :channel => "#whalebird",
     :additional_parameters => {
       :mrkdwn => true
     }
