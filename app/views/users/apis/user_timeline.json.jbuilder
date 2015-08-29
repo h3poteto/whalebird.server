@@ -7,7 +7,7 @@ json.array!(@response) do |res|
     json.profile_image_url res.user.profile_image_url.to_s
   end
   if res.media.present?
-    json.media res.media.map {|m| m.media_url.to_s }
+    json.partial! 'users/apis/medias', medias: res.media
   end
   if res.retweeted_status.present?
     json.media res.retweeted_status.media.map {|m| m.media_url.to_s }

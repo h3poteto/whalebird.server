@@ -74,7 +74,8 @@ class User < ActiveRecord::Base
             protected: status.user.protected?,
             profile_image_url: status.user.profile_image_url.to_s,
             created_at: status.created_at.strftime("%Y-%m-%d %H:%M"),
-            media: status.media.map {|m| m.media_url.to_s }
+            media: status.media.map {|m| m.media_url_https.to_s },
+            video: status.media.map {|m|  m.class == Twitter::Media::AnimatedGif ? m.video_info.variants.first.url.to_s : "" }
           }
         when "retweet"
           if status.retweeted_status.present?
@@ -87,7 +88,8 @@ class User < ActiveRecord::Base
               protected: status.retweeted_status.user.protected?,
               profile_image_url: status.retweeted_status.user.profile_image_url.to_s,
               created_at: status.retweeted_status.created_at.strftime("%Y-%m-%d %H:%M"),
-              media: status.retweeted_status.media.map {|m| m.media_url.to_s }
+              media: status.retweeted_status.media.map {|m| m.media_url_https.to_s },
+              video: status.retweeted_status.media.map {|m| m.class == Twitter::Media::AnimatedGif ? m.video_info.variants.first.url.to_s : ""}
             }
           end
         when "favorite"
@@ -102,7 +104,8 @@ class User < ActiveRecord::Base
               protected: target.user.protected?,
               profile_image_url: target.user.profile_image_url.to_s,
               created_at: target.created_at.to_datetime.strftime("%Y-%m-%d %H:%M"),
-              media: target.media.map {|m| m.media_url.to_s}
+              media: target.media.map {|m| m.media_url_https.to_s},
+              video: target.media.map {|m|  m.class == Twitter::Media::AnimatedGif ? m.video_info.variants.first.url.to_s : "" }
             }
           end
         end
