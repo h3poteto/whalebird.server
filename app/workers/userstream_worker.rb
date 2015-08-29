@@ -1,6 +1,7 @@
 # coding: utf-8
 class UserstreamWorker
   include Sidekiq::Worker
+  sidekiq_options queue: :loop
 
   sidekiq_retry_in do |count|
     10
