@@ -94,6 +94,7 @@ class Users::ApisController < UsersController
 
   def search
     @response = @client.search(params[:q], @settings)
+    #@response = @response[0..(params[:settings][:count].to_i - 1)]
   end
 
   ## POST APIs
