@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
             text: status.text,
             screen_name: status.sender.screen_name,
             name: status.sender.name,
-            profile_image_url: status.sender.profile_image_url.to_s,
+            profile_image_url: status.sender.profile_image_url_https.to_s,
             created_at: status.created_at.strftime("%Y-%m-%d %H:%M")
           }
         when "reply"
@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
             screen_name: status.user.screen_name,
             name: status.user.name,
             protected: status.user.protected?,
-            profile_image_url: status.user.profile_image_url.to_s,
+            profile_image_url: status.user.profile_image_url_https.to_s,
             created_at: status.created_at.strftime("%Y-%m-%d %H:%M"),
             media: status.media.map {|m| m.media_url_https.to_s },
             video: status.media.map {|m|  m.class == Twitter::Media::AnimatedGif ? m.video_info.variants.first.url.to_s : "" }
@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
               screen_name: status.retweeted_status.user.screen_name,
               name: status.retweeted_status.user.name,
               protected: status.retweeted_status.user.protected?,
-              profile_image_url: status.retweeted_status.user.profile_image_url.to_s,
+              profile_image_url: status.retweeted_status.user.profile_image_url_https.to_s,
               created_at: status.retweeted_status.created_at.strftime("%Y-%m-%d %H:%M"),
               media: status.retweeted_status.media.map {|m| m.media_url_https.to_s },
               video: status.retweeted_status.media.map {|m| m.class == Twitter::Media::AnimatedGif ? m.video_info.variants.first.url.to_s : ""}
@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
               screen_name: target.user.screen_name,
               name: target.user.name,
               protected: target.user.protected?,
-              profile_image_url: target.user.profile_image_url.to_s,
+              profile_image_url: target.user.profile_image_url_https.to_s,
               created_at: target.created_at.to_datetime.strftime("%Y-%m-%d %H:%M"),
               media: target.media.map {|m| m.media_url_https.to_s},
               video: target.media.map {|m|  m.class == Twitter::Media::AnimatedGif ? m.video_info.variants.first.url.to_s : "" }
