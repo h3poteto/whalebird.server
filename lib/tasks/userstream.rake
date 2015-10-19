@@ -1,4 +1,6 @@
 # coding: utf-8
+require 'sidekiq/api'
+
 namespace :userstream do
   desc "boot userstream task in sidekiq"
   task :boot => :environment do
@@ -10,6 +12,17 @@ namespace :userstream do
     end
   end
 
+  desc "restart userstream task in sidekiq"
+  task :restart => :environment do
+    old_pid = "./tmp/pids/sidekiq.pid"
+    if File.exists?(old_pid)
+      Process.kill("KILL", File.read(old_pid).to_i)
+      Sidekiq::Queue.new.clear
+      Rake::Task["userstream:boot"].invoke
+    end
+  end
+
+  desc "test userstream"
   task :test => :environment do
 
     user = User.all.first
