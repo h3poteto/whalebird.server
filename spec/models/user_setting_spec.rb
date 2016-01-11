@@ -22,67 +22,45 @@ RSpec.describe UserSetting, :type => :model do
     it { should validate_presence_of(:user_id) }
   end
 
-  describe 'when create' do
-    context 'with valid attributes' do
-      subject { build(:user_setting) }
-      it "should create a new instance" do
-        expect(subject.save).not_to be_falsey
-      end
-    end
-
-    describe "start userstream" do
+  describe 'start_userstream' do
+    context 'when create' do
       context "user_setting notification is true" do
+        let(:user_setting) { build(:user_setting_notification_on) }
         it "should call start_userstream" do
-          user_setting = build(:user_setting_notification_on)
           expect(user_setting).to receive(:start_userstream)
           user_setting.save!
         end
       end
 
       context "user_setting notification is false" do
+        let(:user_setting) { build(:user_setting_notification_off) }
         it "should call start_userstream" do
-          user_setting = build(:user_setting_notification_off)
           expect(user_setting).to receive(:start_userstream)
           user_setting.save!
         end
       end
     end
-  end
 
-  describe 'when update' do
-    context 'after create' do
-      before do
-        @attr = attributes_for(:user_setting)
-        @user_setting = create(:user_setting)
-        @user_setting.update_attributes(@attr)
-      end
-      subject { UserSetting.find(@user_setting.id) }
-      it "should new values" do
-        @attr.each do |k,v|
-          expect(subject.send(k)).to eq(v)
-        end
-      end
-    end
-
-    describe "start userstream" do
-      before(:each) { UserSetting.skip_callback(:create, :after, :start_userstream) }
-      let!(:user) { create(:user) }
-      let!(:user_setting) { create(:user_setting_notification_on, user_id: user.id) }
+    context 'when update' do
+      let(:user) { create(:user) }
+      let(:user_setting) { create(:user_setting_notification_on, user_id: user.id) }
       context "when userstream is not running" do
         before(:each) do
           user.update_attributes!(userstream: false)
         end
         context "change settings" do
           it "should call start_userstream" do
+            expect(user_setting).not_to receive(:start_userstream)
             user_setting.notification = false
-            expect(user_setting).to receive(:start_userstream)
             user_setting.save!
+            expect(user.reload.userstream).to be_truthy
           end
         end
         context "do not change settings" do
           it "should call start_userstream" do
-            expect(user_setting).to receive(:start_userstream)
+            expect(user_setting).not_to receive(:start_userstream)
             user_setting.save!
+            expect(user.reload.userstream).to be_truthy
           end
         end
       end
@@ -96,24 +74,17 @@ RSpec.describe UserSetting, :type => :model do
             user_setting.notification = false
             expect(user_setting).not_to receive(:start_userstream)
             user_setting.save!
+            expect(user.reload.userstream).to be_truthy
           end
         end
         context "do not change settings" do
           it "should not call start_userstream" do
             expect(user_setting).not_to receive(:start_userstream)
             user_setting.save!
+            expect(user.reload.userstream).to be_truthy
           end
         end
       end
-    end
-  end
-
-  describe 'when delete', :delete do
-    subject { create(:user_setting) }
-    it "should delete" do
-      id = subject.id
-      expect(subject.destroy).not_to be_falsey
-      expect { UserSetting.find(id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

@@ -322,6 +322,8 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    test_after_commit (0.4.2)
+      activerecord (>= 3.2)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -409,6 +411,7 @@ DEPENDENCIES
   slack-notifier
   spring
   spring-commands-rspec
+  test_after_commit
   therubyracer
   turbolinks
   twitter!
@@ -418,4 +421,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
