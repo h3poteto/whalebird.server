@@ -6,7 +6,7 @@ class PushNotificationWorker
 
   APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
 
-  def perform(device_token, alert, badge, category, custom_data)
+  def perform(sqs_msg, device_token, alert, badge, category, custom_data)
     APN.certificate = File.read(Settings.push.certification_path)
     notification = Houston::Notification.new(device: device_token)
     notification.alert = alert

@@ -1,5 +1,5 @@
 sqs_client = Aws::SQS::Client.new(
-  endpoint: Settings.sqs.endpoint,
+  endpoint: ENV["AWS_SQS_ENDPOINT"],
   secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
   access_key_id: ENV["AWS_ACCESS_KEY_ID"],
   region: ENV["AWS_REGION"]

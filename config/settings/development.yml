@@ -3,5 +3,3 @@ site:
   host: "192.168.33.14"
 push:
   certification_path: "certification/server_certificates_sandbox.pem"
-sqs:
-  endpoint: "http://localhost:4568"
