@@ -36,6 +36,7 @@ gem 'unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'annotate'
 gem 'figaro', '<= 0.7.0'
 gem 'rails_config'
 gem 'simple_form'
