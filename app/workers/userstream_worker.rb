@@ -1,11 +1,7 @@
 # coding: utf-8
 class UserstreamWorker
   include Shoryuken::Worker
-  shoryuken_options queue: :high_priority, auto_delete: true
-
-  # shoryuken_retry_in do |count|
-  #   10
-  # end
+  shoryuken_options queue: :high_priority, auto_delete: false, retry_intervals: (0...25).map {|i| 10}
 
   def perform(sqs_msg, user_id)
     @user = User.find(user_id)

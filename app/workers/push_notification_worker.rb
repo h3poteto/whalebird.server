@@ -2,7 +2,7 @@
 class PushNotificationWorker
   include Shoryuken::Worker
 
-  shoryuken_options queue: :default, auto_delete: true
+  shoryuken_options queue: :default, auto_delete: false
 
   APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
 
