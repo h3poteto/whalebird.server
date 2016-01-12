@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: user_settings
+#
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  notification   :boolean          default(TRUE), not null
+#  reply          :boolean          default(TRUE), not null
+#  favorite       :boolean          default(TRUE), not null
+#  direct_message :boolean          default(TRUE), not null
+#  retweet        :boolean          default(TRUE), not null
+#  device_token   :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class UserSetting < ActiveRecord::Base
   after_commit :start_userstream, :if => :activate_notification?
 
