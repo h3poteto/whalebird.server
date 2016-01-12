@@ -57,6 +57,9 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'whenever', :require => false
 gem 'ruby_rncryptor'
+gem 'aws-sdk'
+gem 'fake_sqs'
+gem 'shoryuken'
 
 group :development, :test do
   gem 'pry-byebug'

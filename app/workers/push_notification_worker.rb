@@ -1,7 +1,8 @@
 # coding: utf-8
 class PushNotificationWorker
-  include Sidekiq::Worker
+  include Shoryuken::Worker
 
+  shoryuken_options queue: :default, auto_delete: true
 
   APN = Rails.env.production? ? Houston::Client.production : Houston::Client.development
 

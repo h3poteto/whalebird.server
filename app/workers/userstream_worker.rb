@@ -1,9 +1,9 @@
 # coding: utf-8
 class UserstreamWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: :loop
+  include Shoryuken::Worker
+  shoryuken_options queue: :high_priority, auto_delete: true
 
-  sidekiq_retry_in do |count|
+  shoryuken_retry_in do |count|
     10
   end
 
