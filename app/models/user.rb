@@ -143,7 +143,14 @@ class User < ActiveRecord::Base
         end
       end
 
-      PushNotificationWorker.perform_async(user_setting.device_token, message, unread_count.unread, category, custom_data)
+      body_data = {
+        device_token: user_setting.device_token,
+        message: message,
+        unread: unread_count.unread.to_s,
+        category: category,
+        custom_data: custom_data
+      }
+      PushNotificationWorker.perform_async(body_data)
     end
   end
 

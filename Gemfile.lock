@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/phstc/shoryuken.git
+  revision: 9ac47e2a75f0396ace97a1e7de7c306386ff2a79
+  branch: master
+  specs:
+    shoryuken (2.0.3)
+      aws-sdk-core (~> 2)
+      celluloid (~> 0.16)
+
+GIT
   remote: https://github.com/sferik/twitter.git
   revision: 2caff0be3cd725774a4e2558b673d5178c60a324
   branch: master
@@ -49,6 +58,12 @@ GEM
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
     arel (5.0.1.20140414130214)
+    aws-sdk (2.2.9)
+      aws-sdk-resources (= 2.2.9)
+    aws-sdk-core (2.2.9)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.2.9)
+      aws-sdk-core (= 2.2.9)
     bcrypt (3.1.9)
     better_errors (2.0.0)
       coderay (>= 1.0.0)
@@ -75,9 +90,6 @@ GEM
     capistrano-rbenv (2.0.3)
       capistrano (~> 3.1)
       sshkit (~> 1.3)
-    capistrano-sidekiq (0.5.2)
-      capistrano
-      sidekiq
     capistrano3-unicorn (0.2.1)
       capistrano (~> 3.1, >= 3.1.0)
     capybara (2.4.4)
@@ -91,8 +103,23 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    celluloid (0.15.2)
-      timers (~> 1.1.0)
+    celluloid (0.17.2)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.5)
+      timers (>= 4.1.1)
     chronic (0.10.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -107,7 +134,6 @@ GEM
     commander (4.2.1)
       highline (~> 1.6.11)
     commonjs (0.2.7)
-    connection_pool (2.0.0)
     database_cleaner (1.3.0)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -135,6 +161,9 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    fake_sqs (0.3.1)
+      builder
+      sinatra
     faker (1.4.3)
       i18n (~> 0.5)
     faker-japanese (0.0.1)
@@ -144,6 +173,7 @@ GEM
     hashie (3.3.1)
     highline (1.6.21)
     hike (1.2.3)
+    hitimes (1.2.3)
     houston (2.2.1)
       commander (~> 4.1)
       json
@@ -161,11 +191,12 @@ GEM
     jbuilder (2.2.4)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jmespath (1.1.3)
     jpmobile (4.2.0)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.2)
+    json (1.8.3)
     kgio (2.9.2)
     less (2.5.1)
       commonjs (~> 0.2.7)
@@ -188,7 +219,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
     mime-types (2.5)
-    mini_portile (0.6.0)
+    mini_portile2 (2.0.0)
     minitest (5.6.1)
     multi_json (1.10.1)
     multipart-post (2.0.0)
@@ -199,8 +230,8 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
-    nokogiri (1.6.3.1)
-      mini_portile (= 0.6.0)
+    nokogiri (1.6.7.1)
+      mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
     oauth (0.4.7)
     omniauth (1.2.2)
@@ -254,9 +285,6 @@ GEM
     rake (10.3.2)
     rdoc (4.1.2)
       json (~> 1.4)
-    redis (3.1.0)
-    redis-namespace (1.5.1)
-      redis (~> 3.0, >= 3.0.4)
     ref (1.0.5)
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
@@ -291,14 +319,6 @@ GEM
       rdoc (~> 4.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
-    sidekiq (3.2.6)
-      celluloid (= 0.15.2)
-      connection_pool (>= 2.0.0)
-      json
-      redis (>= 3.0.6)
-      redis-namespace (>= 1.3.1)
-    sidekiq-failures (0.4.5)
-      sidekiq (>= 2.16.0)
     simple_form (3.0.2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -333,7 +353,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
-    timers (1.1.0)
+    timers (4.1.1)
+      hitimes
     turbolinks (2.5.1)
       coffee-rails
     twitter-bootstrap-rails (3.2.0)
@@ -367,13 +388,13 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  aws-sdk
   better_errors
   binding_of_caller
   capistrano
   capistrano-bundler
   capistrano-rails
   capistrano-rbenv
-  capistrano-sidekiq
   capistrano3-unicorn
   capybara
   carrierwave
@@ -383,6 +404,7 @@ DEPENDENCIES
   exception_notification
   exception_notification-rake
   factory_girl_rails
+  fake_sqs
   faker
   faker-japanese
   figaro (<= 0.7.0)
@@ -407,9 +429,8 @@ DEPENDENCIES
   ruby_rncryptor
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  shoryuken!
   shoulda-matchers
-  sidekiq
-  sidekiq-failures
   simple_form
   sinatra
   slack-notifier

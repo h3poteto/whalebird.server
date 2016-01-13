@@ -1,14 +1,11 @@
 # coding: utf-8
 class UserstreamWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: :loop
+  include Shoryuken::Worker
+  shoryuken_options queue: 'loop', auto_delete: true, retry_intervals: (0...25).map {|i| 10}
 
-  sidekiq_retry_in do |count|
-    10
-  end
-
-  def perform(user_id)
-    @user = User.find(user_id)
+  def perform(sqs_msg, user_id)
+    sqs_msg.delete
+    @user = User.find(user_id.to_i)
     p @user.name
 
     if !@user.user_setting.notification? || @user.user_setting.device_token.blank?

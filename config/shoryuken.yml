@@ -1,0 +1,18 @@
+aws:
+  access_key_id:     <%= ENV["AWS_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
+  region:            <%= ENV["AWS_REGION"] %>
+  sqs_endpoint:      <%= ENV["AWS_SQS_ENDPOINT"] %>
+  receive_message:
+    attribute_names:
+      - ApproximateReceiveCount
+      - SentTimestamp
+verbose: false
+concurrency: 100
+delay: 2
+pidfile: ./tmp/pids/shoryuken.pid
+logfile: ./log/shoryuken.log
+retry: 25
+queues:
+  - [loop, 80]
+  - [default, 20]

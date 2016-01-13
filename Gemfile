@@ -46,8 +46,8 @@ gem 'omniauth-twitter'
 gem 'jpmobile'
 gem 'twitter', git: 'https://github.com/sferik/twitter.git', branch: 'master'
 gem 'i18n_generators'
-gem 'sidekiq'
-gem 'sidekiq-failures'
+#gem 'sidekiq'
+#gem 'sidekiq-failures'
 gem 'houston'
 gem 'exception_notification'
 gem 'slack-notifier'
@@ -57,6 +57,9 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'whenever', :require => false
 gem 'ruby_rncryptor'
+gem 'aws-sdk'
+gem 'fake_sqs'
+gem 'shoryuken', git: 'https://github.com/phstc/shoryuken.git', branch: 'master'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -88,5 +91,5 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
-  gem 'capistrano-sidekiq'
+  #gem 'capistrano-sidekiq'
 end
