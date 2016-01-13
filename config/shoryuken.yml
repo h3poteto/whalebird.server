@@ -9,10 +9,10 @@ aws:
       - SentTimestamp
 verbose: false
 concurrency: 100
-delay: 25
+delay: 2
 pidfile: ./tmp/pids/shoryuken.pid
 logfile: ./log/shoryuken.log
 retry: 25
 queues:
-  - [high_priority, 80]
+  - [loop, 80]
   - [default, 20]

@@ -1,5 +1,5 @@
 # coding: utf-8
-require 'sidekiq/api'
+#require 'sidekiq/api'
 
 namespace :userstream do
   desc "boot userstream task in sidekiq"
@@ -8,7 +8,7 @@ namespace :userstream do
     @user_settings = UserSetting.where(notification: true)
     @user_settings.each do |user_setting|
       user_setting.user.update_attributes!(userstream: true)
-      UserstreamWorker.perform_in(10.seconds, user_setting.user_id)
+      UserstreamWorker.perform_in(10.seconds, user_setting.user_id.to_s)
     end
   end
 

@@ -1,10 +1,11 @@
 # coding: utf-8
 class UserstreamWorker
   include Shoryuken::Worker
-  shoryuken_options queue: :high_priority, auto_delete: false, retry_intervals: (0...25).map {|i| 10}
+  shoryuken_options queue: 'loop', auto_delete: true, retry_intervals: (0...25).map {|i| 10}
 
   def perform(sqs_msg, user_id)
-    @user = User.find(user_id)
+    sqs_msg.delete
+    @user = User.find(user_id.to_i)
     p @user.name
 
     if !@user.user_setting.notification? || @user.user_setting.device_token.blank?
