@@ -36,6 +36,6 @@ every '*/5 * * * *' do
   rails4_runner "MonitorSidekiq.check_and_restart"
 end
 
-every '21 21 * * 5' do
+every '21 21 * * *' do
   rake "userstream:restart"
 end
