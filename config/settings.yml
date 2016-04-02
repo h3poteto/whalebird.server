@@ -1,6 +1,6 @@
 site:
   host: "api.whalebird.org"
   fqdn: "api.whalebird.org"
-redis: "127.0.0.1:6379"
+redis: "localhost:6379"
 push:
   certification_path: "certification/server_certificates_sandbox.pem"
