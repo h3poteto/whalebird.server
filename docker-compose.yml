@@ -17,6 +17,7 @@ redis:
 whalebird:
   build: .
   volumes:
+    - ~/.ssh:/home/rails/.ssh
     - .:/home/rails/app
   ports:
     - "3001:3000"
