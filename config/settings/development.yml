@@ -1,5 +1,5 @@
 site:
-  fqdn: "192.168.33.14:3000"
-  host: "192.168.33.14"
+  fqdn: "192.168.99.100:3000"
+  host: "192.168.99.100"
 push:
   certification_path: "certification/server_certificates_sandbox.pem"
