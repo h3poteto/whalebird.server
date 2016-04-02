@@ -12,6 +12,8 @@ USER rails
 ENV HOME /home/rails
 ENV RUBY_VERSION 2.3.0
 
+RUN mkdir -p ${HOME}/.ssh
+
 # rbenv install
 RUN git clone https://github.com/rbenv/rbenv.git ${HOME}/.rbenv
 RUN mkdir -p ${HOME}/.rbenv/plugins && git clone https://github.com/sstephenson/ruby-build.git ${HOME}/.rbenv/plugins/ruby-build
