@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.6'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -38,7 +38,7 @@ gem 'unicorn'
 
 gem 'annotate'
 gem 'figaro', '<= 0.7.0'
-gem 'rails_config'
+gem 'config'
 gem 'simple_form'
 gem 'devise'
 gem 'omniauth'
@@ -68,7 +68,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'spring'
-  gem "spring-commands-rspec"
+  gem 'spring-commands-rspec'
 end
 
 group :test do
@@ -89,4 +89,5 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano-sidekiq'
+  gem 'web-console', '~> 2.0'
 end
