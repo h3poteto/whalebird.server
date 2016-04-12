@@ -65,15 +65,15 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.1.0'
   gem 'capybara'
   gem 'spring'
   gem 'spring-commands-rspec'
 end
 
 group :test do
-  gem 'shoulda-matchers', require: false
-  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', '~> 2.7.0', require: false
+  gem 'rspec-collection_matchers', '~> 1.0.0'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'faker'
