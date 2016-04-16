@@ -27,7 +27,11 @@ module WhalebirdServer
     config.i18n.default_locale = :ja
     config.assets.enabled = true
     I18n.enforce_available_locales = false
+
     config.encoding = 'utf-8'
+
+    config.active_record.raise_in_transactional_callbacks = true
+
     config.generators do |g|
       g.test_frameworks = "rspec"
       g.controller_specs = false

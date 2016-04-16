@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.6'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -38,7 +38,7 @@ gem 'unicorn'
 
 gem 'annotate'
 gem 'figaro', '<= 0.7.0'
-gem 'rails_config'
+gem 'config'
 gem 'simple_form'
 gem 'devise'
 gem 'omniauth'
@@ -48,6 +48,7 @@ gem 'twitter', git: 'https://github.com/sferik/twitter.git', branch: 'master'
 gem 'i18n_generators'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'redis-namespace'
 gem 'houston'
 gem 'exception_notification'
 gem 'slack-notifier'
@@ -65,15 +66,15 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.1.0'
   gem 'capybara'
   gem 'spring'
-  gem "spring-commands-rspec"
+  gem 'spring-commands-rspec'
 end
 
 group :test do
-  gem 'shoulda-matchers', require: false
-  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', '~> 2.7.0', require: false
+  gem 'rspec-collection_matchers', '~> 1.0.0'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'faker'
@@ -89,4 +90,5 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano-sidekiq'
+  gem 'web-console', '~> 2.0'
 end

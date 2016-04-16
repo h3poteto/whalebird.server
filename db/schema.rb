@@ -13,17 +13,17 @@
 
 ActiveRecord::Schema.define(version: 20150620135044) do
 
-  create_table "admins", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "admins", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,49 +31,49 @@ ActiveRecord::Schema.define(version: 20150620135044) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
-  create_table "attachments", force: true do |t|
-    t.string   "filename"
+  create_table "attachments", force: :cascade do |t|
+    t.string   "filename",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "unread_counts", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "unread",     default: 0, null: false
+  create_table "unread_counts", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "unread",     limit: 4, default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "user_settings", force: true do |t|
-    t.integer  "user_id"
-    t.boolean  "notification",   default: true, null: false
-    t.boolean  "reply",          default: true, null: false
-    t.boolean  "favorite",       default: true, null: false
-    t.boolean  "direct_message", default: true, null: false
-    t.boolean  "retweet",        default: true, null: false
-    t.string   "device_token"
+  create_table "user_settings", force: :cascade do |t|
+    t.integer  "user_id",        limit: 4
+    t.boolean  "notification",               default: true, null: false
+    t.boolean  "reply",                      default: true, null: false
+    t.boolean  "favorite",                   default: true, null: false
+    t.boolean  "direct_message",             default: true, null: false
+    t.boolean  "retweet",                    default: true, null: false
+    t.string   "device_token",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "uid",                    default: "",    null: false
-    t.string   "provider",               default: "",    null: false
-    t.string   "name"
-    t.string   "screen_name"
-    t.string   "oauth_token"
-    t.string   "oauth_token_secret"
-    t.boolean  "userstream",             default: false, null: false
-    t.string   "encrypted_password",     default: "",    null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "",    null: false
+    t.string   "uid",                    limit: 255, default: "",    null: false
+    t.string   "provider",               limit: 255, default: "",    null: false
+    t.string   "name",                   limit: 255
+    t.string   "screen_name",            limit: 255
+    t.string   "oauth_token",            limit: 255
+    t.string   "oauth_token_secret",     limit: 255
+    t.boolean  "userstream",                         default: false, null: false
+    t.string   "encrypted_password",     limit: 255, default: "",    null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
