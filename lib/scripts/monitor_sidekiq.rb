@@ -10,7 +10,7 @@ class MonitorSidekiq
 
     process_found = false
     result.split("\n").each{|line|
-      next if !line.include?('sidekiq 3.2.6')
+      next if !line.include?('sidekiq 4.1.1')
 
       process_found = true
       break
