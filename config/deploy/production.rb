@@ -69,3 +69,4 @@ server 'api.whalebird.org',
     forward_agent: true,
     auth_methods: %w(publickey password)
   }
+

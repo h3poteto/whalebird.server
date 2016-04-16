@@ -41,7 +41,6 @@ set :rbenv_path, '~/.rbenv'
 set :rbenv_type, :system
 set :rbenv_ruby, '2.3.0'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 
 set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
@@ -49,9 +48,8 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
-set :sidekiq_config, -> { File.join(release_path, 'config', 'sidekiq.yml') }
-set :sidekiq_role, :web
-
+set :sidekiq_pid, "#{shared_path}/tmp/pids/sidekiq.pid"
+set :sidekiq_role, -> { :app }
 
 after 'deploy:publishing', 'deploy:restart'
 
@@ -73,17 +71,31 @@ namespace :deploy do
       upload!('config/application.production.yml', "#{shared_path}/config/application.yml")
       upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
 
-      unless test"[ -d #{shared_path}/lib/extras ]"
+      unless test "[ -d #{shared_path}/lib/extras ]"
         execute "mkdir -p #{shared_path}/lib/extras"
       end
       upload!('lib/extras/application_secrets.rb', "#{shared_path}/lib/extras/application_secrets.rb")
 
-      unless test"[ -d #{shared_path}/certification ]"
+      unless test "[ -d #{shared_path}/certification ]"
         execute "mkdir -p #{shared_path}"
       end
       upload!('certification', "#{shared_path}", :recursive => true)
     end
   end
+
+  namespace :sidekiq do
+    desc 'stop'
+    task :stop do
+      on roles(fetch(:sidekiq_role)) do |host|
+        if test "[ -f #{fetch(:sidekiq_pid)} ] && ps $(cat #{fetch(:sidekiq_pid)})"
+          execute "kill $(cat #{fetch(:sidekiq_pid)})"
+        end
+      end
+    end
+  end
+
+  after :restart, 'deploy:sidekiq:stop'
   before :starting, 'deploy:upload'
   after :finishing, 'deploy:cleanup'
 end
+
