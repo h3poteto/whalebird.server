@@ -5,7 +5,7 @@ set :application, 'whalebird.server'
 set :repo_url, 'git@github.com:h3poteto/whalebird.server'
 
 # Default branch is :master
-set :branch, 'master'
+set :branch, 'iss-66'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/srv/www/whalebird.server'
@@ -42,8 +42,6 @@ set :rbenv_type, :system
 set :rbenv_ruby, '2.3.0'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_roles, :all
-set :rbenv_map_bins, fetch(:rbenv_map_bins).to_a.concat(%w(sidekiq sidekiqctl))
-set :bundle_bins, fetch(:bundle_bins).to_a.concat(%w(sidekiq sidekiqctl))
 
 set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
 set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
@@ -51,8 +49,6 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 set :sidekiq_pid, "#{shared_path}/tmp/pids/sidekiq.pid"
-set :sidekiq_config, "#{release_path}/config/sidekiq.yml"
-set :sidekiq_timeout, -> { 10 }
 set :sidekiq_role, -> { :app }
 
 after 'deploy:publishing', 'deploy:restart'
@@ -87,20 +83,20 @@ namespace :deploy do
     end
   end
 
-  namespace :sidekiq do
-    desc 'stop'
-    task :stop do
-      on roles(fetch(:sidekiq_role)) do |host|
-        if test "[ -f #{fetch(:sidekiq_pid)} ] && ps $(cat #{fetch(:sidekiq_pid)})"
-          within current_path do
-            execute :sidekiqctl, 'stop', fetch(:sidekiq_pid), fetch(:sidekiq_timeout)
-          end
-        end
-      end
-    end
-  end
+  # namespace :sidekiq do
+  #   desc 'stop'
+  #   task :stop do
+  #     on roles(fetch(:sidekiq_role)) do |host|
+  #       if test "[ -f #{fetch(:sidekiq_pid)} ] && ps $(cat #{fetch(:sidekiq_pid)})"
+  #         within current_path do
+  #           execute :sidekiqctl, 'stop', fetch(:sidekiq_pid), fetch(:sidekiq_timeout)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
-  before :restart, 'deploy:sidekiq:stop'
+  #before :restart, 'deploy:sidekiq:stop'
   before :starting, 'deploy:upload'
   after :finishing, 'deploy:cleanup'
 end

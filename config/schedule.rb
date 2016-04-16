@@ -32,9 +32,9 @@ every 1.day, :at => '23:00 pm' do
   rake "image:clean"
 end
 
-every '*/5 * * * *' do
-  rails4_runner "MonitorSidekiq.check_and_restart"
-end
+# every '*/5 * * * *' do
+#   rails4_runner "MonitorSidekiq.check_and_restart"
+# end
 
 every '21 21 * * *' do
   rake "userstream:restart"
