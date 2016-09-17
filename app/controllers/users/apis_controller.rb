@@ -93,8 +93,8 @@ class Users::ApisController < UsersController
   end
 
   def search
-    @response = @client.search(params[:q], @settings)
-    #@response = @response[0..(params[:settings][:count].to_i - 1)]
+    # http://qiita.com/riocampos/items/6999a52460dd7df941ea
+    @response = @client.search(params[:q], count: @settings[:count].to_i).take(@settings[:count].to_i)
   end
 
   ## POST APIs
