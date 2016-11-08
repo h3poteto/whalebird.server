@@ -1,27 +1,31 @@
-storage:
- image: busybox
- volumes:
-   - /var/lib/mysql
-mysql:
-  image: mysql:5.6.29
-  ports:
-    - "3307:3306"
-  volumes_from:
-    - storage
-  environment:
-    MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-redis:
-  image: redis:3.0-alpine
-  ports:
-    - "6379:6379"
-whalebird:
-  build: .
-  volumes:
-    - ~/.ssh:/home/rails/.ssh
-    - .:/home/rails/app
-  ports:
-    - "3001:3000"
-  links:
-    - redis:redis
-    - mysql:mysql
-  command: /bin/bash
+version: "2"
+services:
+  storage:
+   image: busybox
+   volumes:
+     - /var/lib/mysql
+  mysql:
+    image: mysql:5.6.29
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - storage
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+  redis:
+    image: redis:3.0-alpine
+    ports:
+      - "6379:6379"
+  rails:
+    image: h3poteto/rails
+    environment:
+      BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+    volumes:
+      - ~/.ssh:/home/rails/.ssh
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    links:
+      - redis:redis
+      - mysql:mysql
+    command: /bin/bash
