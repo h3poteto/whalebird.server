@@ -58,6 +58,8 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'whenever', :require => false
 gem 'ruby_rncryptor'
+gem 'resque'
+gem 'daemon-spawn', :require => "daemon_spawn"
 
 group :development, :test do
   gem 'pry-byebug'
