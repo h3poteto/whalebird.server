@@ -2,22 +2,4 @@
 require File.expand_path('../../config/application', __FILE__)
 Rails.application.require_environment!
 
-class ResqueWorkerDaemon < DaemonSpawn::Base
-  def start(args)
-    @worker = Resque::Worker.new('loop') # 複数のworkerがある場合はカンマ区切りで指定
-    @worker.verbose = true
-    @worker.work
-  end
-
-  def stop
-  end
-end
-
-ResqueWorkerDaemon.spawn!({
-  :processes => ENV["RESQUE_WORKER"] || 3, # プロセス数の指定
-  :working_dir => Rails.root,
-  :pid_file => File.join(Rails.root, 'tmp', 'pids', 'resque_daemon.pid'),
-  :log_file => File.join(Rails.root, 'log', 'resque_daemon.log'),
-  :sync_log => true,
-  :singleton => true
-})
+ResqueWorkerDaemon.spawn!(ResqueWorkerDaemon.options)

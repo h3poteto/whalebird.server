@@ -11,11 +11,11 @@ namespace :userstream do
 
   desc "restart userstream task in resque"
   task :restart => :environment do
-    old_pid = "./tmp/pids/resque.pid"
-    if File.exists?(old_pid)
-      # TODO: stop
-      # Process.kill("KILL", File.read(old_pid).to_i)
-      Resque.redis.del("loop")
+    if File.exists?(ResqueWorkerDaemon.options[:pid_file])
+      ResqueWorkerDaemon.stop(ResqueWorkerDaemon.options, {})
+      # 本来，resqueはworkerが死んだらキューも道連れにして死ぬため，キューの削除は不要
+      # だが，念のため消しておく
+      Resque.redis.del(Settings.resque.queue)
       Rake::Task["userstream:boot"].invoke
     end
   end
