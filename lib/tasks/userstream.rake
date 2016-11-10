@@ -11,7 +11,7 @@ namespace :userstream do
 
   desc "restart userstream task in resque"
   task :restart => :environment do
-    if File.exists?(ResqueWorkerDaemon.options[:pid_file])
+    if File.exist?(ResqueWorkerDaemon.options[:pid_file])
       ResqueWorkerDaemon.stop(ResqueWorkerDaemon.options, {})
       # 本来，resqueはworkerが死んだらキューも道連れにして死ぬため，キューの削除は不要
       # だが，念のため消しておく
