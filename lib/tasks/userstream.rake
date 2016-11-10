@@ -1,6 +1,3 @@
-# coding: utf-8
-require 'sidekiq/api'
-
 namespace :userstream do
   desc "boot userstream task in sidekiq"
   task :boot => :environment do
@@ -8,16 +5,17 @@ namespace :userstream do
     @user_settings = UserSetting.where(notification: true)
     @user_settings.each do |user_setting|
       user_setting.user.update_attributes!(userstream: true)
-      UserstreamWorker.perform_in(10.seconds, user_setting.user_id)
+      Resque.enqueue(UserstreamWorker, user_setting.user_id)
     end
   end
 
-  desc "restart userstream task in sidekiq"
+  desc "restart userstream task in resque"
   task :restart => :environment do
-    old_pid = "./tmp/pids/sidekiq.pid"
+    old_pid = "./tmp/pids/resque.pid"
     if File.exists?(old_pid)
-      Process.kill("KILL", File.read(old_pid).to_i)
-      Sidekiq::Queue.new.clear
+      # TODO: stop
+      # Process.kill("KILL", File.read(old_pid).to_i)
+      Resque.redis.del("loop")
       Rake::Task["userstream:boot"].invoke
     end
   end

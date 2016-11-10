@@ -2,7 +2,8 @@
 class UserstreamWorker
   @queue = :loop
 
-  def perform(user_id)
+  def self.perform(user_id)
+    sleep 10
     @user = User.find(user_id)
     p @user.name
 
