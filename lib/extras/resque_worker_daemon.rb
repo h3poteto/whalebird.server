@@ -19,8 +19,8 @@ class ResqueWorkerDaemon < DaemonSpawn::Base
     {
       processes: Settings.resque.process, # プロセス数の指定
       working_dir: Rails.root,
-      pid_file: File.join(Rails.root, 'tmp', 'pids', 'resque_daemon.pid'),
-      log_file: File.join(Rails.root, 'log', 'resque_daemon.log'),
+      pid_file: File.join(Rails.root, "tmp", "pids", "resque_daemon.pid"),
+      log_file: File.join(Rails.root, "log", "resque_daemon.log"),
       sync_log: true,
       singleton: true
     }
