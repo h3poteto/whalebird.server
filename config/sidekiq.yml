@@ -4,5 +4,4 @@
 :logfile: ./log/sidekiq.log
 :retry: 25
 :queues:
-  - [default, 20]
-  - [loop, 80]
+  - [default, 5]
