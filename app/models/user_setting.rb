@@ -23,8 +23,7 @@ class UserSetting < ActiveRecord::Base
 
   def start_userstream
     user.update_attributes!(userstream: true)
-    Resque.enqueue(UserstreamWorker, user_id) unless Rails.env.test?
-    # UserstreamWorker.perform_in(10.seconds, user_id) unless Rails.env.test?
+    UserstreamWorker.perform_in(10.seconds, user_id) unless Rails.env.test?
   end
 
   def stop_userstream

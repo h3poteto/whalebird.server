@@ -20,11 +20,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, { error: "log/crontab.err.log", standard: "log/crontab.log" }
+# 出力先のログファイルの指定
+set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
+# ジョブの実行環境の指定
 set :environment, :production
-env :RAILS_ENV, environment
 env :PATH, ENV['PATH']
-job_type :command, "cd :path && :task :output"
+job_type :rails4_runner, "cd :path && bin/rails runner -e :environment :task :output"
 
 
 every 1.day, :at => '23:00 pm' do
@@ -32,11 +33,7 @@ every 1.day, :at => '23:00 pm' do
 end
 
 every '*/5 * * * *' do
-  runner "MonitorSidekiq.check_and_restart"
-end
-
-every "*/5 * * * *" do
-  command "if [ ! -e tmp/pids/resque_daemon.pid ] || ! ps $(cat tmp/pids/resque_daemon.pid) ; then bundle exec bin/resque start ; fi"
+  rails4_runner "MonitorSidekiq.check_and_restart"
 end
 
 every '21 21 * * *' do
