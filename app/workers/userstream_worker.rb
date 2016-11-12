@@ -1,9 +1,13 @@
 # coding: utf-8
 class UserstreamWorker
-  @queue = :loop
+  include Sidekiq::Worker
+  sidekiq_options queue: :loop
 
-  def self.perform(user_id)
-    sleep 10
+  sidekiq_retry_in do |count|
+    10
+  end
+
+  def perform(user_id)
     @user = User.find(user_id)
     p @user.name
 

@@ -1,6 +1,6 @@
 site:
   fqdn: "192.168.99.100:3000"
   host: "192.168.99.100"
-redis: "redis:6379"
+redis: <%= ENV["REDIS_PORT_6379_TCP_ADDR"] + ":6379" %>
 push:
   certification_path: "certification/server_certificates_sandbox.pem"
