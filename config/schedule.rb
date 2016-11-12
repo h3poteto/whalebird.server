@@ -20,7 +20,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, {error: "log/crontab.err.log", standard: "log/crontab.log"}
+set :output, { error: "log/crontab.err.log", standard: "log/crontab.log" }
 set :environment, :production
 env :RAILS_ENV, environment
 env :PATH, ENV['PATH']
