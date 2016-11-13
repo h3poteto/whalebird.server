@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.6.1'
 
 set :application, 'whalebird.server'
 set :repo_url, 'git@github.com:h3poteto/whalebird.server'
@@ -14,7 +14,9 @@ set :deploy_to, '/srv/www/whalebird.server'
 set :scm, :git
 
 # Default value for :format is :pretty
-set :format, :pretty
+set :format, :airbrussh
+
+set :format_options, truncate: false
 
 # Default value for :log_level is :debug
 set :log_level, :debug
