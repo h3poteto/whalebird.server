@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MonitorSidekiq
   class Logging
     attr_reader :logger
@@ -8,7 +9,7 @@ module MonitorSidekiq
     end
 
     def self.logger
-      @@logger ||= self.new.logger
+      @logger ||= self.new.logger
     end
   end
 end

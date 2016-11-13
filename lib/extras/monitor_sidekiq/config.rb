@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MonitorSidekiq
   module Config
     def self.pid_file

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MonitorSidekiq
   class Connection
     attr_reader :redis, :namespace, :timeout
@@ -15,7 +16,7 @@ module MonitorSidekiq
     end
 
     def running?
-      redis.get("#{namespace}_alive_sidekiq").to_i != 0
+      redis.get("#{namespace}_alive_sidekiq").to_i.nonzero?
     end
 
     def alive
@@ -23,7 +24,7 @@ module MonitorSidekiq
     end
 
     def send_sidekiq_signal
-      MonitorSidekiqWorker.perform_async()
+      MonitorSidekiqWorker.perform_async
     end
 
     def wait
