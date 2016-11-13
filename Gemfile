@@ -89,5 +89,6 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
+  gem 'capistrano-sidekiq'
   gem 'web-console', '~> 2.0'
 end
