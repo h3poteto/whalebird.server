@@ -21,12 +21,12 @@
 # Learn more: http://github.com/javan/whenever
 
 # log file
-set :output, {:error => "log/crontab.err.log", :standard => "log/crontab.log"}
+set :output, { error: "log/crontab.err.log", standard: "log/crontab.log" }
 set :environment, :production
 env :PATH, ENV["PATH"]
 
 
-every 1.day, :at => "23:00 pm" do
+every 1.day, at: "23:00 pm" do
   rake "image:clean"
 end
 
