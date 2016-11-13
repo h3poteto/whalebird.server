@@ -25,10 +25,15 @@ set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 # ジョブの実行環境の指定
 set :environment, :production
 env :PATH, ENV['PATH']
+job_type :rails4_runner, "cd :path && bin/rails runner -e :environment :task :output"
 
 
 every 1.day, :at => '23:00 pm' do
   rake "image:clean"
+end
+
+every '*/5 * * * *' do
+  rails4_runner "MonitorSidekiq.check_and_restart"
 end
 
 every '21 21 * * *' do
