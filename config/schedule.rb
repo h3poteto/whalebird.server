@@ -21,23 +21,23 @@
 # Learn more: http://github.com/javan/whenever
 
 # log file
-set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
+set :output, {:error => "log/crontab.err.log", :standard => "log/crontab.log"}
 set :environment, :production
-env :PATH, ENV['PATH']
+env :PATH, ENV["PATH"]
 
 
-every 1.day, :at => '23:00 pm' do
+every 1.day, :at => "23:00 pm" do
   rake "image:clean"
 end
 
-every '*/5 * * * *' do
+every "*/5 * * * *" do
   rake "monitor_sidekiq:process_check"
 end
 
-every '*/12 * * * *' do
+every "*/12 * * * *" do
   rake "monitor_sidekiq:working_check"
 end
 
-every '21 21 * * *' do
+every "21 21 * * *" do
   rake "userstream:restart"
 end

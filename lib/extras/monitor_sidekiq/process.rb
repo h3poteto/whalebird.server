@@ -3,14 +3,7 @@ module MonitorSidekiq
   class Process
     def running?
       result = `ps aux | grep sidekiq | grep -v 'grep'`
-      process_found = false
-      result.split("\n").each{|line|
-        next if !line.include?("sidekiq #{Sidekiq::VERSION}")
-
-        process_found = true
-        break
-      }
-      process_found
+      result.split("\n").any?{ |line| line.include?("sidekiq #{Sidekiq::VERSION}") }
     end
 
     def restart
