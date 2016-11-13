@@ -32,7 +32,7 @@ module MonitorSidekiq
     end
 
     def stop
-      pid = MonitorSidekiq.Config.pid_file
+      pid = MonitorSidekiq::Config.pid_file
       if File.exist?(pid)
         ::Process.kill("KILL", File.read(pid).to_i)
         MonitorSidekiq::Logging.logger.info "Sidekiq is stopped."
