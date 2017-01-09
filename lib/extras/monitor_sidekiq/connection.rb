@@ -33,11 +33,22 @@ module MonitorSidekiq
 
     def stop
       pid = MonitorSidekiq::Config.pid_file
-      if File.exist?(pid)
+      if process_exist?(pid)
         ::Process.kill("KILL", File.read(pid).to_i)
         MonitorSidekiq::Logging.logger.info "Sidekiq is stopped."
         # 起動はmonit側に任せる
       end
+    end
+
+    private
+
+    def process_exist?(pid_file)
+      File.exist?(pid_file) && File.exist?(process_file(pid_file)) && File.read(process_file(pid_file)).include?("sidekiq")
+    end
+
+    def process_file(pid_file)
+      pid = File.read(pid_file).to_i
+      "/proc/#{pid}/cmdline"
     end
   end
 end
