@@ -18,4 +18,10 @@ module MonitorSidekiq
       monitor.restart
     end
   end
+
+  def self.test
+    pid = MonitorSidekiq::Config.pid_file
+    m = MonitorSidekiq::Connection.new
+    m.process_exist?(pid)
+  end
 end
