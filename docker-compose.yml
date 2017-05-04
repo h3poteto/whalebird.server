@@ -13,7 +13,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
   redis:
-    image: redis:3.0-alpine
+    image: redis:3.2-alpine
     ports:
       - "6379:6379"
   rails:

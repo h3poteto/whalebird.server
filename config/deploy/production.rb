@@ -60,12 +60,12 @@
 #     # password: 'please use keys'
 #   }
 set :stage, :production
-server 'api.whalebird.org',
-  user: 'ubuntu',
+server "13.112.52.218",
+  user: "rails",
   roles: %w{app web db},
   ssh_options: {
-    user: 'ubuntu',
-    keys: %w(~/.ssh/h3poteto-aws-key.pem),
+    user: "rails",
+    keys: %w(~/.ssh/id_rsa),
     forward_agent: true,
     auth_methods: %w(publickey password)
   }

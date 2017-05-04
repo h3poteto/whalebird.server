@@ -41,7 +41,7 @@ set :keep_releases, 5
 
 set :rbenv_path, '~/.rbenv'
 set :rbenv_type, :system
-set :rbenv_ruby, '2.3.0'
+set :rbenv_ruby, '2.3.3'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_roles, :all
 set :rbenv_map_bins, fetch(:rbenv_map_bins).to_a.concat(%w(sidekiq sidekiqctl))
