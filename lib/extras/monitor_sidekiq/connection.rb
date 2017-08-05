@@ -4,8 +4,8 @@ module MonitorSidekiq
     attr_reader :redis, :namespace, :timeout
     def initialize
       @redis = Redis.new(
-        host: Settings.redis.host,
-        port: Settings.redis.port
+        host: ENV["REDIS_HOST"],
+        port: ENV["REDIS_PORT"]
       )
       @namespace = "#{Rails.application.class.parent}_#{Rails.env}"
       @timeout = 10
