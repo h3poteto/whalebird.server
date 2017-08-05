@@ -3,4 +3,3 @@ site:
   fqdn: "api.whalebird.org"
 push:
   certification_path: "certification/server_certificates_production.pem"
-redis:

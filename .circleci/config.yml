@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: h3poteto/rails:v2.3.3
+        environment:
+          BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+          DB_HOST: 127.0.0.1
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
+          # MySQLの起動チェック用
+          HEALTH_CHECK_RETRY_LIMIT: 10
+          HEALTH_CHECK_RETRY_WAIT: 3
+      - image: mysql:5.7
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      - image: redis:3.2-alpine
+    working_directory: /usr/src/app
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restoring Cache - bundle
+          keys:
+            - bundle-{{ checksum "Gemfile" }}-{{ checksum "Gemfile.lock" }}
+            - bundle-{{ checksum "Gemfile" }}-
+      - run:
+          name: Bundle install
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          name: Saving Cache - bundle
+          key: bundle-{{ checksum "Gemfile" }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - "vendor/bundle"
+      - run:
+          name: Checking mysql connection
+          command: |
+            for i in $(seq $HEALTH_CHECK_RETRY_LIMIT)
+            do
+              mysql -u root -h 127.0.0.1 -e 'show databases' || (sleep $HEALTH_CHECK_RETRY_WAIT; false) && break
+            done
+      - run:
+          name: Migrate database
+          command: |
+            bundle exec rake db:create RAILS_ENV=test
+            bundle exec rake db:migrate RAILS_ENV=test
+      - run:
+          name: Test
+          command: bundle exec rspec

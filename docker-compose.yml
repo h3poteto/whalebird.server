@@ -17,9 +17,12 @@ services:
     ports:
       - "6379:6379"
   rails:
-    image: h3poteto/rails
+    image: h3poteto/rails:v2.3.3
+    env_file: .docker-env
     environment:
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     volumes:
       - ~/.ssh:/home/rails/.ssh
       - .:/usr/src/app
