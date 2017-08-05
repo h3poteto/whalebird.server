@@ -31,7 +31,7 @@ set :pty, true
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 set :linked_dirs, %w{log tmp/backup tmp/pids tmp/sockets vendor/bundle certification public/uploads}
-set :linked_files, %w{config/application.yml config/settings/production.local.yml lib/extras/application_secrets.rb}
+set :linked_files, %w{lib/extras/application_secrets.rb}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -68,14 +68,6 @@ namespace :deploy do
   desc 'Upload local config yml'
   task :upload do
     on roles(:app) do |host|
-      unless test "[ -d #{shared_path}/config ]"
-        execute "mkdir -p #{shared_path}/config"
-      end
-      unless test "[ -d #{shared_path}/config/settings ]"
-        execute "mkdir -p #{shared_path}/config/settings"
-      end
-      upload!('config/application.production.yml', "#{shared_path}/config/application.yml")
-
       unless test "[ -d #{shared_path}/lib/extras ]"
         execute "mkdir -p #{shared_path}/lib/extras"
       end

@@ -133,9 +133,6 @@ GEM
     faker-japanese (0.0.1)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
-    figaro (0.7.0)
-      bundler (~> 1.0)
-      rails (>= 3, < 5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hashie (3.4.3)
@@ -394,7 +391,6 @@ DEPENDENCIES
   factory_girl_rails
   faker
   faker-japanese
-  figaro (<= 0.7.0)
   houston
   i18n_generators
   jbuilder (~> 2.0)

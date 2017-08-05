@@ -37,7 +37,6 @@ gem 'unicorn'
 # gem 'capistrano-rails', group: :development
 
 gem 'annotate'
-gem 'figaro', '<= 0.7.0'
 gem 'config'
 gem 'simple_form'
 gem 'devise'
