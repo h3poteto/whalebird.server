@@ -75,7 +75,6 @@ namespace :deploy do
         execute "mkdir -p #{shared_path}/config/settings"
       end
       upload!('config/application.production.yml', "#{shared_path}/config/application.yml")
-      upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
 
       unless test "[ -d #{shared_path}/lib/extras ]"
         execute "mkdir -p #{shared_path}/lib/extras"
