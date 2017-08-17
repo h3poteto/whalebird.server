@@ -103,19 +103,37 @@ class Users::ApisController < UsersController
       if @settings[:media].present?
         attachment = Attachment.where(filename: @settings[:media].to_s).first
         file = File.open(attachment.filename.path)
-        @client.update_with_media(params[:status], file)
+
+        @settings.delete(:media)
+
+        @client.update_with_media(params[:status].to_s, file, @settings)
       elsif @settings[:medias].present?
-        medias = []
-        @settings[:medias].each do |media|
+        # update_with_mediaは複数ファイルのアップロードに対応しなくなっている
+        # https://dev.twitter.com/rest/reference/post/statuses/update_with_media
+        # そのためupdateでアップロード済みファイルのidを渡す必要がある
+        # http://www.rubydoc.info/gems/twitter/Twitter/REST/Tweets#update-instance_method
+        media_ids = @settings[:medias].map do |media|
           attachment = Attachment.where(filename: media.to_s).first
-          medias.push(File.new(attachment.filename.path))
+          @client.upload(File.new(attachment.filename.path))
         end
-        @client.update_with_media(params[:status], medias)
+
+        @settings.delete(:medias)
+
+        # ファイルアップロードでもin_reply_to等が指定されている可能性はあるので
+        # ファイル以外のオプションはマージして使う
+        @client.update(
+          params[:status].to_s,
+          @settings.merge(
+            {
+              media_ids: media_ids.join(",")
+            }
+          )
+        )
       else
         @response = @client.update(params[:status].to_s, @settings)
       end
     else
-      @response = @client.update(params[:status])
+      @response = @client.update(params[:status].to_s)
     end
     render action: :index
   end
