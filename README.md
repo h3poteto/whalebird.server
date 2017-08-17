@@ -1,5 +1,6 @@
 # whalebird.server
 
-iOS向けtwitterクライアント，[Whalebird](https://itunes.apple.com/jp/app/whalebird/id955717062)のAPIサーバーです．
+API server for [Whalebird](https://itunes.apple.com/jp/app/whalebird/id955717062) which is a Twitter client for iOS.
 
-アプリからの要求に応じてtwitterAPIを叩き，そのレスポンスを返すRESTのインターフェースを持ちます．
+This server calls twitter API on demand from client application, and returns response.
+
