@@ -107,6 +107,10 @@ class Users::ApisController < UsersController
         @settings.delete(:media)
 
         @client.update_with_media(params[:status].to_s, file, @settings)
+        # mediaオプションは最新のクライアントソースでは使用されていない
+        # もしリクエストがあるとしたら古いクライアントを使い続けている人
+        logger.warn "[DEPRECATED] Called media option in #tweet, please use medias option"
+
       elsif @settings[:medias].present?
         # update_with_mediaは複数ファイルのアップロードに対応しなくなっている
         # https://dev.twitter.com/rest/reference/post/statuses/update_with_media
@@ -129,6 +133,7 @@ class Users::ApisController < UsersController
             }
           )
         )
+
       else
         @response = @client.update(params[:status].to_s, @settings)
       end
