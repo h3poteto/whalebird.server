@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.10'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -45,7 +45,7 @@ gem 'omniauth-twitter'
 gem 'jpmobile'
 gem 'twitter', '~> 6.1'
 gem 'i18n_generators'
-gem 'sidekiq'
+gem 'sidekiq', '~> 4.1'
 gem 'sidekiq-failures'
 gem 'redis-namespace'
 gem 'houston'
@@ -65,7 +65,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-rails', '~> 3.7'
   gem 'capybara'
   gem 'spring'
   gem 'spring-commands-rspec'
