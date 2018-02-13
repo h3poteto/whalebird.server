@@ -31,7 +31,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-gem 'unicorn'
+gem 'unicorn', '~> 5.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -39,7 +39,7 @@ gem 'unicorn'
 gem 'annotate'
 gem 'config'
 gem 'simple_form'
-gem 'devise'
+gem 'devise', '~> 3.5'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'jpmobile'
@@ -50,10 +50,10 @@ gem 'sidekiq-failures'
 gem 'redis-namespace'
 gem 'houston'
 gem 'exception_notification'
-gem 'slack-notifier'
+gem 'slack-notifier', '~> 1.5'
 gem 'exception_notification-rake'
 gem 'sinatra'
-gem 'carrierwave'
+gem 'carrierwave', '~> 0.11'
 gem 'rmagick'
 gem 'whenever', :require => false
 gem 'ruby_rncryptor'
