@@ -161,7 +161,6 @@ GEM
     faker-japanese (0.0.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    grease (0.3.1)
     hashie (3.5.7)
     highline (1.7.10)
     hike (1.2.3)
@@ -177,7 +176,7 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.0.0)
     http_parser.rb (0.6.0)
-    i18n (0.9.4)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     i18n_generators (2.1.1)
       rails (>= 3.0.0)
@@ -194,9 +193,8 @@ GEM
     kgio (2.11.2)
     less (2.6.0)
       commonjs (~> 0.2.7)
-    less-rails (3.0.0)
+    less-rails (2.8.0)
       actionpack (>= 4.0)
-      grease
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
@@ -432,7 +430,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jpmobile (~> 4.2)
   jquery-rails
-  less-rails
+  less-rails (~> 2.8.0)
   mysql2
   omniauth
   omniauth-twitter
