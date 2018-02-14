@@ -23,6 +23,10 @@ services:
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      TWITTER_CLIENT_ID: $TWITTER_CLIENT_ID
+      TWITTER_CLIENT_SECRET: $TWITTER_CLIENT_SECRET
+      TWITTER_ACCESS_TOKEN: $TWITTER_ACCESS_TOKEN
+      TWITTER_ACCESS_TOKEN_SECRET: $TWITTER_ACCESS_TOKEN_SECRET
     volumes:
       - ~/.ssh:/home/rails/.ssh
       - .:/usr/src/app
