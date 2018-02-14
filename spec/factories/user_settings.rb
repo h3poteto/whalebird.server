@@ -14,7 +14,7 @@
 #  updated_at     :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user_setting, class: :UserSetting do
     user
     device_token { Faker::Lorem.characters(100) }

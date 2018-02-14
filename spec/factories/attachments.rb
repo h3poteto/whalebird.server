@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :attachment do
     filename File.open(File.join(Rails.root, 'app/assets/images/noimage.png'))
   end

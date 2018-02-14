@@ -74,7 +74,7 @@ end
 group :test do
   gem 'shoulda-matchers', '~> 2.7.0', require: false
   gem 'rspec-collection_matchers', '~> 1.0.0'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'faker'
   gem 'faker-japanese'

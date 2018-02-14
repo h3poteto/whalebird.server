@@ -4,7 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'shoulda/matchers'
-require 'factory_girl'
+require 'factory_bot'
 require 'faker'
 require 'faker/japanese'
 require 'database_cleaner'
@@ -59,7 +59,7 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   Faker::Config.locale = :en
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.infer_spec_type_from_file_location!
 

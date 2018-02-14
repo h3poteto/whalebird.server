@@ -9,7 +9,7 @@
 #  updated_at :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :unread_count, class: :UnreadCount do
     user
     unread { [0,1].sample }
