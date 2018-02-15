@@ -4,16 +4,16 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  email                  :string(255)      default(""), not null, indexed
-#  uid                    :string(255)      default(""), not null, indexed => [provider]
-#  provider               :string(255)      default(""), not null, indexed => [uid]
+#  email                  :string(255)      default(""), not null
+#  uid                    :string(255)      default(""), not null
+#  provider               :string(255)      default(""), not null
 #  name                   :string(255)
 #  screen_name            :string(255)
 #  oauth_token            :string(255)
 #  oauth_token_secret     :string(255)
 #  userstream             :boolean          default(FALSE), not null
 #  encrypted_password     :string(255)      default(""), not null
-#  reset_password_token   :string(255)      indexed
+#  reset_password_token   :string(255)
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
 #  sign_in_count          :integer          default(0), not null
@@ -31,7 +31,7 @@
 #  index_users_on_uid_and_provider      (uid,provider) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { Faker::Lorem.characters(10) }

@@ -14,7 +14,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 
-gem 'less-rails'
+gem 'less-rails', '~> 2.8.0'
 gem 'twitter-bootstrap-rails'
 
 # Use jquery as the JavaScript library
@@ -31,7 +31,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-gem 'unicorn'
+gem 'unicorn', '~> 5.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -39,10 +39,10 @@ gem 'unicorn'
 gem 'annotate'
 gem 'config'
 gem 'simple_form'
-gem 'devise'
+gem 'devise', '~> 3.5'
 gem 'omniauth'
 gem 'omniauth-twitter'
-gem 'jpmobile'
+gem 'jpmobile', '~> 4.2'
 gem 'twitter', '~> 6.1'
 gem 'i18n_generators'
 gem 'sidekiq', '~> 4.1'
@@ -50,10 +50,10 @@ gem 'sidekiq-failures'
 gem 'redis-namespace'
 gem 'houston'
 gem 'exception_notification'
-gem 'slack-notifier'
+gem 'slack-notifier', '~> 1.5'
 gem 'exception_notification-rake'
 gem 'sinatra'
-gem 'carrierwave'
+gem 'carrierwave', '~> 0.11'
 gem 'rmagick'
 gem 'whenever', :require => false
 gem 'ruby_rncryptor'
@@ -74,7 +74,7 @@ end
 group :test do
   gem 'shoulda-matchers', '~> 2.7.0', require: false
   gem 'rspec-collection_matchers', '~> 1.0.0'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'faker'
   gem 'faker-japanese'
